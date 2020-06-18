@@ -11,9 +11,7 @@ public class MainBehaivor : MonoBehaviour
     public VideoPlayer VideoPlayer;
     public GameObject LoadingScreen;
     public GameObject ChoicesPanel;
-    public GameObject[] ButtonsObject;
-    public Button Buttons2;
-    public List<Button> Buttons = new List<Button>();
+    public Button[] Buttons;
 
     public Dictionary<SceneId, Scene> Scenes = new Dictionary<SceneId, Scene>
     {
@@ -100,11 +98,8 @@ public class MainBehaivor : MonoBehaviour
         VideoPlayer.loopPointReached += VideoCompleted;
 
         var counter = 0;
-        foreach (var buttonObject in ButtonsObject)
+        foreach (var button in Buttons)
         {
-            var button = buttonObject.GetComponent<Button>();
-            Buttons.Add(button);
-            
             var counterCurrentValue = counter;
             button.onClick.AddListener(() => SelectButton(counterCurrentValue));
 
