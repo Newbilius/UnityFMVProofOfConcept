@@ -1,8 +1,6 @@
 /_BUILD
-*.mp4
 /Library
 /Logs
-*.mp4.meta
 /obj
 /Temp
 /.vs
