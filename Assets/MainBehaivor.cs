@@ -26,7 +26,7 @@ public class MainBehaivor : MonoBehaviour
                     },
                     new SceneChoice
                     {
-                        Caption = "Пойти в рукопашку",
+                        Caption = "Пойти в рукопашную",
                         SceneId = SceneId.KnuckleAttack
                     },
                 })
@@ -67,7 +67,7 @@ public class MainBehaivor : MonoBehaviour
                 {
                     new SceneChoice
                     {
-                        Caption = "Аткаовать бензопилой",
+                        Caption = "Атаковать бензопилой",
                         SceneId = SceneId.ChainsawAttack
                     },
                     new SceneChoice
