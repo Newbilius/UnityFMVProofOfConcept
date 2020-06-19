@@ -5,13 +5,13 @@ using UnityEngine;
 using UnityEngine.Video;
 using UnityEngine.UI;
 
-//todo тут сейчас уныние в плане управления кнопками, пока тестирую саму идею
 public class Gameplay : MonoBehaviour
 {
     public VideoPlayer VideoPlayer;
     public GameObject LoadingScreen;
     public GameObject ChoicesPanel;
-    public Button[] Buttons;
+
+    public Button ButtonPrototype;
 
     public Dictionary<SceneId, Scene> Scenes = new ScenesInitializer().Init();
 
@@ -21,16 +21,7 @@ public class Gameplay : MonoBehaviour
     {
         ChoicesPanel.SetActive(false);
         VideoPlayer.loopPointReached += VideoCompleted;
-        //VideoPlayer.playbackSpeed = 3; //полезно для дебага
-
-        var counter = 0;
-        foreach (var button in Buttons)
-        {
-            var counterCurrentValue = counter;
-            button.onClick.AddListener(() => SelectButton(counterCurrentValue));
-
-            counter++;
-        }
+        VideoPlayer.playbackSpeed = 3; //полезно для дебага
 
         await FirstVideo(Scenes[SceneId.Start].FileName);
     }
@@ -60,11 +51,19 @@ public class Gameplay : MonoBehaviour
 
         ChoicesPanel.SetActive(true);
 
-        Buttons[1].gameObject.SetActive(currentScene.Choices.Length != 1);
+        foreach (Transform child in ChoicesPanel.transform)
+            Destroy(child.gameObject);
+
         var buttonNumber = 0;
         foreach (var choice in currentScene.Choices)
         {
-            Buttons[buttonNumber].GetComponentInChildren<Text>().text = choice.GetCaption();
+            var button = Instantiate(ButtonPrototype);
+            button.GetComponentInChildren<Text>().text = choice.GetCaption();
+
+            button.transform.SetParent(ChoicesPanel.transform, false);
+
+            var buttonNumberCurrentValue = buttonNumber;
+            button.onClick.AddListener(() => SelectButton(buttonNumberCurrentValue));
             buttonNumber++;
         }
     }
