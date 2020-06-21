@@ -100,6 +100,7 @@ public class ScenesInitializer
                             SceneId = SceneId.Start
                         }
                     },
+                    scene => { KnuckleAttackCounter = 0; },
                     musicNameOnEnd: "Between_Levels")
             }
         };
@@ -107,9 +108,9 @@ public class ScenesInitializer
 
     private string GetKnuckleAttackHaveChainsawText()
     {
-        return KnuckleAttackCounter < 2
+        return KnuckleAttackCounter < 4
             ? "Атаковать бензопилой"
-            : "Атаковать бензопилой (просто гипотеза: возможно бензопила сильнее кастета...)";
+            : "Атаковать бензопилой (!!!)";
     }
 
     private string GetKnuckleAttackText()
@@ -125,7 +126,7 @@ public class ScenesInitializer
             case 3:
                 return "Пойти в рукопашную (да ладно?!!!)";
             default:
-                return $"Пойти в рукопашную ({KnuckleAttackCounter} раз?! Это уже не смешно)";
+                return $"Пойти в рукопашную ({KnuckleAttackCounter} раз?!)";
         }
     }
 }
