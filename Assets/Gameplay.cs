@@ -11,17 +11,22 @@ public class Gameplay : MonoBehaviour
     public GameObject LoadingScreen;
     public GameObject ChoicesPanel;
     public Button ButtonPrototype;
+    public AudioSource MusicAudioSource;
 
     public Dictionary<SceneId, Scene> Scenes = new ScenesInitializer().Init();
+
     private SceneId CurrentSceneId = SceneId.Start;
+
+    private Scene CurrentScene => Scenes[CurrentSceneId];
 
     async Task Start()
     {
         ChoicesPanel.SetActive(false);
         VideoPlayer.loopPointReached += VideoCompleted;
-        VideoPlayer.playbackSpeed = 3; //полезно для дебага
+//        VideoPlayer.playbackSpeed = 3; //полезно для дебага
 
-        await FirstVideo(Scenes[SceneId.Start].FileName);
+        await FirstVideo(Scenes[SceneId.Start].FileName,
+            Scenes[SceneId.Start].MusicNameOnStart);
     }
 
     void Update()
@@ -38,14 +43,20 @@ public class Gameplay : MonoBehaviour
     void SelectButton(int buttonNumber)
     {
         ChoicesPanel.SetActive(false);
-        CurrentSceneId = Scenes[CurrentSceneId].Choices[buttonNumber].GetSceneId();
-        Play(Scenes[CurrentSceneId].FileName);
+        CurrentSceneId = CurrentScene.Choices[buttonNumber].GetSceneId();
+
+        if (CurrentScene.MusicNameOnStart != null)
+            ChangeMusic(CurrentScene.MusicNameOnStart);
+
+        Play(CurrentScene.FileName);
     }
 
     void VideoCompleted(VideoPlayer vp)
     {
-        var currentScene = Scenes[CurrentSceneId];
-        currentScene.OnCompleteAction?.Invoke(currentScene);
+        CurrentScene.OnCompleteAction?.Invoke(CurrentScene);
+
+        if (CurrentScene.MusicNameOnEnd != null)
+            ChangeMusic(CurrentScene.MusicNameOnEnd);
 
         ChoicesPanel.SetActive(true);
 
@@ -53,7 +64,7 @@ public class Gameplay : MonoBehaviour
             Destroy(child.gameObject);
 
         var buttonNumber = 0;
-        foreach (var choice in currentScene.Choices)
+        foreach (var choice in CurrentScene.Choices)
         {
             var button = Instantiate(ButtonPrototype);
             button.GetComponentInChildren<Text>().text = choice.GetCaption();
@@ -66,6 +77,13 @@ public class Gameplay : MonoBehaviour
         }
     }
 
+    private void ChangeMusic(string name)
+    {
+        //todo делать кроссфейд между композициями
+        MusicAudioSource.clip = Resources.Load<AudioClip>("Music/" + name);
+        MusicAudioSource.Play();
+    }
+
     private void Play(string name)
     {
         VideoPlayer.Pause();
@@ -74,7 +92,8 @@ public class Gameplay : MonoBehaviour
         VideoPlayer.Play();
     }
 
-    private async Task FirstVideo(string name)
+    private async Task FirstVideo(string name,
+        string musicName)
     {
         VideoPlayer.SetDirectAudioMute(0, true);
         VideoPlayer.url = Path.Combine(Application.streamingAssetsPath, name + ".mp4");
@@ -85,8 +104,11 @@ public class Gameplay : MonoBehaviour
         VideoPlayer.Pause();
         VideoPlayer.frame = 1;
 
+        MusicAudioSource.clip = Resources.Load<AudioClip>("Music/" + musicName);
+
         await Task.Delay(500);
         VideoPlayer.SetDirectAudioMute(0, false);
+        MusicAudioSource.Play();
         VideoPlayer.Play();
         LoadingScreen.SetActive(false);
     }

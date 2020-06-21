@@ -22,7 +22,8 @@ public class ScenesInitializer
                             CaptionAction = GetKnuckleAttackText,
                             SceneId = SceneId.KnuckleAttack
                         },
-                    })
+                    },
+                    musicNameOnStart: "Running_From_Evil")
             },
             {
                 SceneId.StartAfterGameover, new Scene("00_начальная_сцена_02",
@@ -38,7 +39,8 @@ public class ScenesInitializer
                             CaptionAction = GetKnuckleAttackText,
                             SceneId = SceneId.KnuckleAttack
                         },
-                    })
+                    },
+                    musicNameOnStart: "Running_From_Evil")
             },
             {
                 SceneId.KnuckleAttack, new Scene("02_атака_кулаком",
@@ -50,7 +52,8 @@ public class ScenesInitializer
                             SceneId = SceneId.StartAfterGameover
                         }
                     },
-                    scene => { KnuckleAttackCounter++; })
+                    scene => { KnuckleAttackCounter++; },
+                    musicNameOnEnd: "Read_Me")
             },
 
             {
@@ -96,7 +99,8 @@ public class ScenesInitializer
                             Caption = "Начать заново (экран успеха пока не готов)",
                             SceneId = SceneId.Start
                         }
-                    })
+                    },
+                    musicNameOnEnd: "Between_Levels")
             }
         };
     }
