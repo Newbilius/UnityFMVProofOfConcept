@@ -152,8 +152,8 @@ RectTransform:
   m_LocalScale: {x: 0, y: 0, z: 0}
   m_Children:
   - {fileID: 959984294}
-  - {fileID: 1113571983}
   - {fileID: 1772301730}
+  - {fileID: 1113571983}
   m_Father: {fileID: 519420032}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -269,7 +269,6 @@ MonoBehaviour:
   ButtonPrototype: {fileID: 8632554001477680230, guid: f942a6eda37a67c4793b811f4c2ea6b7,
     type: 3}
   MusicAudioSource: {fileID: 519420034}
-  FirstButton: {fileID: 0}
 --- !u!20 &519420031
 Camera:
   m_ObjectHideFlags: 0
@@ -663,7 +662,7 @@ RectTransform:
   m_Children:
   - {fileID: 1183119810}
   m_Father: {fileID: 222184002}
-  m_RootOrder: 1
+  m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
@@ -797,6 +796,7 @@ GameObject:
   - component: {fileID: 1772301733}
   - component: {fileID: 1772301732}
   - component: {fileID: 1772301731}
+  - component: {fileID: 1772301734}
   m_Layer: 5
   m_Name: Panel
   m_TagString: Untagged
@@ -816,12 +816,12 @@ RectTransform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 222184002}
-  m_RootOrder: 2
+  m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 61.80005, y: 8.562012}
-  m_SizeDelta: {x: -125.51404, y: -17.124023}
+  m_AnchoredPosition: {x: 66.3, y: 12}
+  m_SizeDelta: {x: -132.62097, y: -23.930786}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1772301731
 MonoBehaviour:
@@ -867,8 +867,8 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 10907, guid: 0000000000000000f000000000000000, type: 0}
-  m_Type: 1
+  m_Sprite: {fileID: 21300000, guid: 909fd2698f0eb5c428ac64e5b307917d, type: 3}
+  m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
   m_FillMethod: 4
@@ -885,3 +885,15 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1772301729}
   m_CullTransparentMesh: 0
+--- !u!225 &1772301734
+CanvasGroup:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1772301729}
+  m_Enabled: 1
+  m_Alpha: 1
+  m_Interactable: 1
+  m_BlocksRaycasts: 1
+  m_IgnoreParentGroups: 0

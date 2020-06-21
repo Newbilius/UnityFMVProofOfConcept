@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System.Collections;
+using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
@@ -7,7 +8,7 @@ using UnityEngine.EventSystems;
 using UnityEngine.Video;
 using UnityEngine.UI;
 
-//todo показывать панель с анимацией и подложкой
+//todo показывать панель с подложкой
 public class Gameplay : MonoBehaviour
 {
     public VideoPlayer VideoPlayer;
@@ -19,13 +20,13 @@ public class Gameplay : MonoBehaviour
     public Dictionary<SceneId, Scene> Scenes = new ScenesInitializer().Init();
 
     private SceneId CurrentSceneId = SceneId.Start;
-    public Button FirstButton;
+    private Button FirstButton;
 
     private Scene CurrentScene => Scenes[CurrentSceneId];
 
     async Task Start()
     {
-        //лень было разбираться, где в опциях включить это для всех tier
+        //лень было разбираться, где в опциях включить это для всех tier :_:
         QualitySettings.vSyncCount = 1;
 
         ChoicesPanel.SetActive(false);
@@ -37,7 +38,7 @@ public class Gameplay : MonoBehaviour
 
     void Update()
     {
-        //чтобы нельзя было кликнуть в пустом месте и выбрать "никакой" вариант диалога
+        //чтобы нельзя было кликнуть на пустом месте и выбрать "никакой" вариант в диалоге
         if (FirstButton != null && EventSystem.current.currentSelectedGameObject == null)
             EventSystem.current.SetSelectedGameObject(FirstButton.gameObject);
     }
@@ -131,6 +132,22 @@ public class Gameplay : MonoBehaviour
 
                 buttonNumber++;
             }
+        }
+
+        //показываем варианты ответа с анимаицией
+        StartCoroutine(DoFade(ChoicesPanel.GetComponent<CanvasGroup>(), 0.4f));
+    }
+
+    //todo а без корутин и издевательства над IEnumerator никак?
+    private IEnumerator DoFade(CanvasGroup canvasGroup, float duration)
+    {
+        float counter = 0;
+        while (counter < duration)
+        {
+            counter += Time.deltaTime;
+            canvasGroup.alpha = Mathf.Lerp(0, 1, counter / duration);
+
+            yield return null;
         }
     }
 
