@@ -603,9 +603,6 @@
  <Reference Include="Unity.2D.SpriteShape.Editor">
  <HintPath>C:/DEV/Games/UnityFMVProofOfConcept/Library/ScriptAssemblies/Unity.2D.SpriteShape.Editor.dll</HintPath>
  </Reference>
- <Reference Include="Unity.TextMeshPro.Editor">
- <HintPath>C:/DEV/Games/UnityFMVProofOfConcept/Library/ScriptAssemblies/Unity.TextMeshPro.Editor.dll</HintPath>
- </Reference>
  <Reference Include="Unity.2D.Path.Editor">
  <HintPath>C:/DEV/Games/UnityFMVProofOfConcept/Library/ScriptAssemblies/Unity.2D.Path.Editor.dll</HintPath>
  </Reference>
@@ -618,20 +615,8 @@
  <Reference Include="Unity.2D.Animation.Triangle.Runtime">
  <HintPath>C:/DEV/Games/UnityFMVProofOfConcept/Library/ScriptAssemblies/Unity.2D.Animation.Triangle.Runtime.dll</HintPath>
  </Reference>
- <Reference Include="PsdPlugin">
- <HintPath>C:/DEV/Games/UnityFMVProofOfConcept/Library/ScriptAssemblies/PsdPlugin.dll</HintPath>
- </Reference>
- <Reference Include="Unity.CollabProxy.Editor">
- <HintPath>C:/DEV/Games/UnityFMVProofOfConcept/Library/ScriptAssemblies/Unity.CollabProxy.Editor.dll</HintPath>
- </Reference>
- <Reference Include="Unity.Rider.Editor">
- <HintPath>C:/DEV/Games/UnityFMVProofOfConcept/Library/ScriptAssemblies/Unity.Rider.Editor.dll</HintPath>
- </Reference>
  <Reference Include="Unity.Mathematics">
  <HintPath>C:/DEV/Games/UnityFMVProofOfConcept/Library/ScriptAssemblies/Unity.Mathematics.dll</HintPath>
- </Reference>
- <Reference Include="Unity.2D.Psdimporter.Editor">
- <HintPath>C:/DEV/Games/UnityFMVProofOfConcept/Library/ScriptAssemblies/Unity.2D.Psdimporter.Editor.dll</HintPath>
  </Reference>
  <Reference Include="Unity.InternalAPIEngineBridge.001">
  <HintPath>C:/DEV/Games/UnityFMVProofOfConcept/Library/ScriptAssemblies/Unity.InternalAPIEngineBridge.001.dll</HintPath>
@@ -656,9 +641,6 @@
  </Reference>
  <Reference Include="Unity.Mathematics.Editor">
  <HintPath>C:/DEV/Games/UnityFMVProofOfConcept/Library/ScriptAssemblies/Unity.Mathematics.Editor.dll</HintPath>
- </Reference>
- <Reference Include="Unity.TextMeshPro">
- <HintPath>C:/DEV/Games/UnityFMVProofOfConcept/Library/ScriptAssemblies/Unity.TextMeshPro.dll</HintPath>
  </Reference>
  <Reference Include="Unity.2D.Common.Editor">
  <HintPath>C:/DEV/Games/UnityFMVProofOfConcept/Library/ScriptAssemblies/Unity.2D.Common.Editor.dll</HintPath>
