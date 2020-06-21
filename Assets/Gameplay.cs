@@ -2,9 +2,11 @@
 using System.IO;
 using System.Threading.Tasks;
 using UnityEngine;
+using UnityEngine.EventSystems;
 using UnityEngine.Video;
 using UnityEngine.UI;
 
+//todo показывать панель с анимацией
 public class Gameplay : MonoBehaviour
 {
     public VideoPlayer VideoPlayer;
@@ -43,6 +45,8 @@ public class Gameplay : MonoBehaviour
 
     void SelectButton(int buttonNumber)
     {
+        EventSystem.current.SetSelectedGameObject(null);
+
         ChoicesPanel.SetActive(false);
         CurrentSceneId = CurrentScene.Choices[buttonNumber].GetSceneId();
 
@@ -59,10 +63,10 @@ public class Gameplay : MonoBehaviour
         if (CurrentScene.MusicNameOnEnd != null)
             ChangeMusic(CurrentScene.MusicNameOnEnd);
 
-        ChoicesPanel.SetActive(true);
-
         foreach (Transform child in ChoicesPanel.transform)
             Destroy(child.gameObject);
+
+        ChoicesPanel.SetActive(true);
 
         var buttonNumber = 0;
         foreach (var choice in CurrentScene.Choices)
@@ -74,13 +78,18 @@ public class Gameplay : MonoBehaviour
 
             var buttonNumberCurrentValue = buttonNumber;
             button.onClick.AddListener(() => SelectButton(buttonNumberCurrentValue));
+
+            //todo подсвечивает кнопку с анимацией, а хочется сделать так, чтобы сразу появлалась выбранной
+            if (buttonNumber == 0)
+                EventSystem.current.SetSelectedGameObject(button.gameObject);
+
             buttonNumber++;
         }
     }
 
     private void ChangeMusic(string name)
     {
-        //todo делать кроссфейд между композициями
+        //todo делать кроссфейд между композициями?
         MusicAudioSource.clip = Resources.Load<AudioClip>("Music/" + name);
         MusicAudioSource.Play();
     }
