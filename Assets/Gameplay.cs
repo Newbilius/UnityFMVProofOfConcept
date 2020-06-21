@@ -21,6 +21,7 @@ public class Gameplay : MonoBehaviour
 
     async Task Start()
     {
+        QualitySettings.vSyncCount = 1;
         ChoicesPanel.SetActive(false);
         VideoPlayer.loopPointReached += VideoCompleted;
 //        VideoPlayer.playbackSpeed = 3; //полезно для дебага
