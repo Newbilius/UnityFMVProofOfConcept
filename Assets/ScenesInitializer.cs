@@ -9,7 +9,7 @@ public class ScenesInitializer
         return new Dictionary<SceneId, Scene>
         {
             {
-                SceneId.Start, new Scene("00_начальная_сцена",
+                SceneId.Start, new Scene("00_начальная_сцена_01",
                     new[]
                     {
                         new SceneChoice
@@ -24,7 +24,22 @@ public class ScenesInitializer
                         },
                     })
             },
-
+            {
+                SceneId.StartAfterGameover, new Scene("00_начальная_сцена_02",
+                    new[]
+                    {
+                        new SceneChoice
+                        {
+                            Caption = "Осмотреться",
+                            SceneId = SceneId.LookAround
+                        },
+                        new SceneChoice
+                        {
+                            CaptionAction = GetKnuckleAttackText,
+                            SceneId = SceneId.KnuckleAttack
+                        },
+                    })
+            },
             {
                 SceneId.KnuckleAttack, new Scene("02_атака_кулаком",
                     new[]
@@ -32,7 +47,7 @@ public class ScenesInitializer
                         new SceneChoice
                         {
                             Caption = "Начать заново",
-                            SceneId = SceneId.Start
+                            SceneId = SceneId.StartAfterGameover
                         }
                     },
                     scene => { KnuckleAttackCounter++; })

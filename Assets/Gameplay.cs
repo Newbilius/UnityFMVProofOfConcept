@@ -10,11 +10,9 @@ public class Gameplay : MonoBehaviour
     public VideoPlayer VideoPlayer;
     public GameObject LoadingScreen;
     public GameObject ChoicesPanel;
-
     public Button ButtonPrototype;
 
     public Dictionary<SceneId, Scene> Scenes = new ScenesInitializer().Init();
-
     private SceneId CurrentSceneId = SceneId.Start;
 
     async Task Start()
@@ -78,16 +76,18 @@ public class Gameplay : MonoBehaviour
 
     private async Task FirstVideo(string name)
     {
+        VideoPlayer.SetDirectAudioMute(0, true);
         VideoPlayer.url = Path.Combine(Application.streamingAssetsPath, name + ".mp4");
         VideoPlayer.Prepare();
         if (!VideoPlayer.isPrepared)
-            await Task.Delay(500);
+            await Task.Delay(100);
         VideoPlayer.Play();
         VideoPlayer.Pause();
         VideoPlayer.frame = 1;
 
         await Task.Delay(500);
+        VideoPlayer.SetDirectAudioMute(0, false);
+        VideoPlayer.Play();
         LoadingScreen.SetActive(false);
-        VideoCompleted(VideoPlayer);
     }
 }
