@@ -8,11 +8,11 @@ using UnityEngine.EventSystems;
 using UnityEngine.Video;
 using UnityEngine.UI;
 
-//todo показывать панель с подложкой
 public class Gameplay : MonoBehaviour
 {
     public VideoPlayer VideoPlayer;
     public GameObject LoadingScreen;
+    public GameObject ChoicesPanelParent;
     public GameObject ChoicesPanel;
     public Button ButtonPrototype;
     public AudioSource MusicAudioSource;
@@ -29,7 +29,7 @@ public class Gameplay : MonoBehaviour
         //лень было разбираться, где в опциях включить это для всех tier :_:
         QualitySettings.vSyncCount = 1;
 
-        ChoicesPanel.SetActive(false);
+        ChoicesPanelParent.SetActive(false);
         VideoPlayer.loopPointReached += VideoCompleted;
         VideoPlayer.playbackSpeed = Application.isEditor ? 3 : 1; //полезно для дебага
 
@@ -48,7 +48,7 @@ public class Gameplay : MonoBehaviour
         FirstButton = null;
         EventSystem.current.SetSelectedGameObject(null);
 
-        ChoicesPanel.SetActive(false);
+        ChoicesPanelParent.SetActive(false);
         CurrentSceneId = CurrentScene.Choices[buttonNumber].GetSceneId();
 
         if (CurrentScene.MusicNameOnStart != null)
@@ -68,7 +68,7 @@ public class Gameplay : MonoBehaviour
         foreach (Transform child in ChoicesPanel.transform)
             Destroy(child.gameObject);
 
-        ChoicesPanel.SetActive(true);
+        ChoicesPanelParent.SetActive(true);
 
         var buttonNumber = 0;
         var buttons = new List<Button>();
@@ -136,7 +136,7 @@ public class Gameplay : MonoBehaviour
         }
 
         //показываем варианты ответа с анимаицией
-        StartCoroutine(DoFade(ChoicesPanel.GetComponent<CanvasGroup>(), 0.4f));
+        StartCoroutine(DoFade(ChoicesPanelParent.GetComponent<CanvasGroup>(), 0.4f));
     }
 
     //todo а без корутин и издевательства над IEnumerator никак?
