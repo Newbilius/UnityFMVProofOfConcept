@@ -59,6 +59,7 @@ public class Gameplay : MonoBehaviour
 
     void VideoCompleted(VideoPlayer vp)
     {
+        Cursor.visible = true;
         CurrentScene.OnCompleteAction?.Invoke(CurrentScene);
 
         if (CurrentScene.MusicNameOnEnd != null)
@@ -160,6 +161,7 @@ public class Gameplay : MonoBehaviour
 
     private void Play(string name)
     {
+        Cursor.visible = false;
         VideoPlayer.Pause();
         VideoPlayer.url = GetFileName(name);
         VideoPlayer.Prepare();
@@ -168,6 +170,7 @@ public class Gameplay : MonoBehaviour
 
     private async Task FirstVideo(Scene scene)
     {
+        Cursor.visible = false;
         //все извращения в этом коде - чтобы не было мигания фона в момент подгрузки первого видео
         VideoPlayer.SetDirectAudioMute(0, true);
         VideoPlayer.url = GetFileName(scene.FileName);
