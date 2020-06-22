@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 
 public class GameScriptsProvider
 {
@@ -44,6 +45,10 @@ public class GameScriptsProvider
             {
                 "ChainsawAtack",
                 choice => { choice.Caption = GetKnuckleAttackHaveChainsawText(); }
+            },
+            {
+                "BAD_ENGING",
+                choice => { choice.Caption = "Секретная концовка"; }
             }
         };
 
@@ -57,6 +62,16 @@ public class GameScriptsProvider
             {
                 "BEGIN",
                 scene => { KnuckleAttackCounter = 0; }
+            },
+            {
+                "RESTART",
+                scene =>
+                {
+                    if (KnuckleAttackCounter < 3)
+                    {
+                        scene.Choices = scene.Choices.Where(x => x.Caption != "BAD_ENGING").ToArray();
+                    }
+                }
             }
         };
 

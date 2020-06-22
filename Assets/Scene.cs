@@ -2,7 +2,7 @@ public class Scene
 {
     public string FileName { get; }
     public string SceneId { get; }
-    public SceneChoice[] Choices { get; }
+    public SceneChoice[] Choices { get; set; }
 
     public string MusicNameOnStart { get; }
     public string MusicNameOnEnd { get;}
