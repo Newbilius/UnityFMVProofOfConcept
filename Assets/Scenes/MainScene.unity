@@ -358,6 +358,7 @@ MonoBehaviour:
   ButtonPrototype: {fileID: 8632554001477680230, guid: f942a6eda37a67c4793b811f4c2ea6b7,
     type: 3}
   MusicAudioSource: {fileID: 519420034}
+  ScenesJsonData: {fileID: 4900000, guid: 8878c2cbad1c5e64c8a4aa870a4db8bd, type: 3}
 --- !u!20 &519420031
 Camera:
   m_ObjectHideFlags: 0

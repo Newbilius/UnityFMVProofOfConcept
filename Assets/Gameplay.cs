@@ -16,16 +16,20 @@ public class Gameplay : MonoBehaviour
     public GameObject ChoicesPanel;
     public Button ButtonPrototype;
     public AudioSource MusicAudioSource;
+    public TextAsset ScenesJsonData;
+    private readonly GameScriptsProvider gameScriptsProvider = new GameScriptsProvider();
 
-    public Dictionary<SceneId, Scene> Scenes = new ScenesInitializer().Init();
+    public Dictionary<int, Scene> Scenes;
 
-    private SceneId CurrentSceneId = SceneId.Start;
+    private int CurrentSceneId;
     private Button FirstButton;
 
     private Scene CurrentScene => Scenes[CurrentSceneId];
 
     async Task Start()
     {
+        Scenes = new ScenesLoader().Init(ScenesJsonData.text, out CurrentSceneId);
+        
         //лень было разбираться, где в опциях включить это для всех tier :_:
         QualitySettings.vSyncCount = 1;
 
@@ -33,7 +37,7 @@ public class Gameplay : MonoBehaviour
         VideoPlayer.loopPointReached += VideoCompleted;
         VideoPlayer.playbackSpeed = Application.isEditor ? 3 : 1; //полезно для дебага
 
-        await FirstVideo(Scenes[SceneId.Start]);
+        await FirstVideo(Scenes[CurrentSceneId]);
     }
 
     void Update()
@@ -49,7 +53,8 @@ public class Gameplay : MonoBehaviour
         EventSystem.current.SetSelectedGameObject(null);
 
         ChoicesPanelParent.SetActive(false);
-        CurrentSceneId = CurrentScene.Choices[buttonNumber].GetSceneId();
+        var choice = gameScriptsProvider.ChoicesHandle(CurrentScene.Choices[buttonNumber]);
+        CurrentSceneId = choice.SceneId;
 
         if (CurrentScene.MusicNameOnStart != null)
             ChangeMusic(CurrentScene.MusicNameOnStart);
@@ -60,10 +65,10 @@ public class Gameplay : MonoBehaviour
     void VideoCompleted(VideoPlayer vp)
     {
         Cursor.visible = true;
-        CurrentScene.OnCompleteAction?.Invoke(CurrentScene);
+        var currentScene = gameScriptsProvider.SceneCompleteHandle(CurrentScene);
 
-        if (CurrentScene.MusicNameOnEnd != null)
-            ChangeMusic(CurrentScene.MusicNameOnEnd);
+        if (currentScene.MusicNameOnEnd != null)
+            ChangeMusic(currentScene.MusicNameOnEnd);
 
         foreach (Transform child in ChoicesPanel.transform)
             Destroy(child.gameObject);
@@ -72,10 +77,11 @@ public class Gameplay : MonoBehaviour
 
         var buttonNumber = 0;
         var buttons = new List<Button>();
-        foreach (var choice in CurrentScene.Choices)
+        foreach (var choiceValue in currentScene.Choices)
         {
+            var choice = gameScriptsProvider.ChoicesHandle(choiceValue);
             var button = Instantiate(ButtonPrototype);
-            button.GetComponentInChildren<Text>().text = choice.GetCaption();
+            button.GetComponentInChildren<Text>().text = choice.Caption;
             buttons.Add(button);
 
             button.transform.SetParent(ChoicesPanel.transform, false);
@@ -136,11 +142,10 @@ public class Gameplay : MonoBehaviour
         }
 
         //показываем варианты ответа с анимаицией
-        StartCoroutine(DoFade(ChoicesPanelParent.GetComponent<CanvasGroup>(), 0.4f));
+        StartCoroutine(FadeIn(ChoicesPanelParent.GetComponent<CanvasGroup>(), 0.4f));
     }
-
-    //todo а без корутин и издевательства над IEnumerator никак?
-    private IEnumerator DoFade(CanvasGroup canvasGroup, float duration)
+    
+    private IEnumerator FadeIn(CanvasGroup canvasGroup, float duration)
     {
         float counter = 0;
         while (counter < duration)
@@ -154,7 +159,7 @@ public class Gameplay : MonoBehaviour
 
     private void ChangeMusic(string name)
     {
-        //todo делать кроссфейд между композициями?
+        //возможно стоит сделать кроссфейд между композициями
         MusicAudioSource.clip = Resources.Load<AudioClip>("Music/" + name);
         MusicAudioSource.Play();
     }
