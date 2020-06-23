@@ -31,7 +31,7 @@ public class ScenesLoader
 
             var scene = new Scene(textData[0],
                 GetSceneCode(sceneData.name),
-                sceneData.links.Select(x => new SceneChoice
+                sceneData.links?.Select(x => new SceneChoice
                 {
                     Caption = x.name,
                     SceneId = x.pid,

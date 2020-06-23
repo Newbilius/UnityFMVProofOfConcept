@@ -5,7 +5,7 @@ public class Scene
     public SceneChoice[] Choices { get; set; }
 
     public string MusicNameOnStart { get; }
-    public string MusicNameOnEnd { get;}
+    public string MusicNameOnEnd { get; }
 
     public Scene(string fileName,
         string sceneCode,
@@ -14,7 +14,7 @@ public class Scene
         string musicNameOnEnd = null)
     {
         FileName = fileName;
-        Choices = choices;
+        Choices = choices ?? new SceneChoice[0];
         SceneCode = sceneCode;
         MusicNameOnStart = musicNameOnStart;
         MusicNameOnEnd = musicNameOnEnd;

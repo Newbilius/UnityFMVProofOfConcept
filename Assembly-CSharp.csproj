@@ -55,8 +55,10 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+     <Compile Include="Assets\GameOverScreen.cs" />
      <Compile Include="Assets\GameScriptsProvider.cs" />
      <Compile Include="Assets\Gameplay.cs" />
+     <Compile Include="Assets\GameplayStatus.cs" />
      <Compile Include="Assets\Scene.cs" />
      <Compile Include="Assets\SceneChoice.cs" />
      <Compile Include="Assets\ScenesLoader.cs" />

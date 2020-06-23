@@ -41,10 +41,6 @@ public class GameScriptsProvider
             {
                 "HAND",
                 choice => { choice.Caption = GetKnuckleAttackText(); }
-            },
-            {
-                "ChainsawAtack",
-                choice => { choice.Caption = GetKnuckleAttackHaveChainsawText(); }
             }
         };
 
@@ -82,14 +78,7 @@ public class GameScriptsProvider
             case 3:
                 return "Пойти в рукопашную (да ладно?!!!)";
             default:
-                return $"Пойти в рукопашную ({KnuckleAttackCounter} раз?!)";
+                return $"Пойти в рукопашную ({KnuckleAttackCounter} раз?!!!!!)";
         }
-    }
-
-    private static string GetKnuckleAttackHaveChainsawText()
-    {
-        return KnuckleAttackCounter < 4
-            ? "Атаковать бензопилой"
-            : "Атаковать бензопилой (может попробовать?)";
     }
 }

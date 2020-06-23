@@ -5,6 +5,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using UnityEngine;
 using UnityEngine.EventSystems;
+using UnityEngine.SceneManagement;
 using UnityEngine.Video;
 using UnityEngine.UI;
 
@@ -18,18 +19,33 @@ public class Gameplay : MonoBehaviour
     public AudioSource MusicAudioSource;
     public TextAsset ScenesJsonData;
     private readonly GameScriptsProvider gameScriptsProvider = new GameScriptsProvider();
+    private Button FirstButton;
 
     public Dictionary<int, Scene> Scenes;
 
-    private int CurrentSceneId;
-    private Button FirstButton;
+    private int _сurrentSceneId;
+
+    private int CurrentSceneId
+    {
+        get => _сurrentSceneId;
+        set
+        {
+            _сurrentSceneId = value;
+            if (!GameplayStatus.ViewedScenes.Contains(value))
+                GameplayStatus.ViewedScenes.Add(value);
+        }
+    }
 
     private Scene CurrentScene => Scenes[CurrentSceneId];
 
     async Task Start()
     {
-        Scenes = new ScenesLoader().Init(ScenesJsonData.text, out CurrentSceneId);
-        
+        Scenes = new ScenesLoader().Init(ScenesJsonData.text, out var currentSceneId);
+        GameplayStatus.ChoicesCount = 0;
+        GameplayStatus.ScenesCount = Scenes.Count;
+        GameplayStatus.ViewedScenes.Clear();
+        CurrentSceneId = currentSceneId;
+
         //лень было разбираться, где в опциях включить это для всех tier :_:
         QualitySettings.vSyncCount = 1;
 
@@ -49,6 +65,7 @@ public class Gameplay : MonoBehaviour
 
     void SelectButton(int buttonNumber)
     {
+        GameplayStatus.ChoicesCount++;
         FirstButton = null;
         EventSystem.current.SetSelectedGameObject(null);
 
@@ -72,6 +89,12 @@ public class Gameplay : MonoBehaviour
 
         foreach (Transform child in ChoicesPanel.transform)
             Destroy(child.gameObject);
+
+        if (currentScene.Choices.Length == 0)
+        {
+            SceneManager.LoadScene("GameOver", LoadSceneMode.Single);
+            return;
+        }
 
         ChoicesPanelParent.SetActive(true);
 
@@ -144,7 +167,7 @@ public class Gameplay : MonoBehaviour
         //показываем варианты ответа с анимаицией
         StartCoroutine(FadeIn(ChoicesPanelParent.GetComponent<CanvasGroup>(), 0.4f));
     }
-    
+
     private IEnumerator FadeIn(CanvasGroup canvasGroup, float duration)
     {
         float counter = 0;
@@ -176,6 +199,7 @@ public class Gameplay : MonoBehaviour
     private async Task FirstVideo(Scene scene)
     {
         Cursor.visible = false;
+
         //все извращения в этом коде - чтобы не было мигания фона в момент подгрузки первого видео
         VideoPlayer.SetDirectAudioMute(0, true);
         VideoPlayer.url = GetFileName(scene.FileName);
