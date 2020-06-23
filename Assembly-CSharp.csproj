@@ -58,13 +58,15 @@
      <Compile Include="Assets\GameOverScreen.cs" />
      <Compile Include="Assets\GameScriptsProvider.cs" />
      <Compile Include="Assets\Gameplay.cs" />
-     <Compile Include="Assets\GameplayStatus.cs" />
+     <Compile Include="Assets\GameplayStatisticss.cs" />
      <Compile Include="Assets\Scene.cs" />
      <Compile Include="Assets\SceneChoice.cs" />
      <Compile Include="Assets\ScenesLoader.cs" />
      <Compile Include="Assets\SubtitlesProvider.cs" />
      <Compile Include="Assets\TwineJson.cs" />
      <Compile Include="Assets\UI\ColorTextButton.cs" />
+     <Compile Include="Assets\UI\ScreensNavigator.cs" />
+     <Compile Include="Assets\UI\UIHelpers.cs" />
  <Reference Include="UnityEngine">
  <HintPath>C:/Program Files/Unity/Hub/Editor/2019.4.0f1/Editor/Data/Managed/UnityEngine/UnityEngine.dll</HintPath>
  </Reference>

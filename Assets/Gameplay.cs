@@ -5,7 +5,6 @@ using System.Linq;
 using System.Threading.Tasks;
 using UnityEngine;
 using UnityEngine.EventSystems;
-using UnityEngine.SceneManagement;
 using UnityEngine.Video;
 using UnityEngine.UI;
 
@@ -33,8 +32,8 @@ public class Gameplay : MonoBehaviour
         set
         {
             _сurrentSceneId = value;
-            if (!GameplayStatus.ViewedScenes.Contains(value))
-                GameplayStatus.ViewedScenes.Add(value);
+            if (!GameplayStatisticss.ViewedScenes.Contains(value))
+                GameplayStatisticss.ViewedScenes.Add(value);
         }
     }
 
@@ -43,9 +42,7 @@ public class Gameplay : MonoBehaviour
     async Task Start()
     {
         Scenes = new ScenesLoader().Init(ScenesJsonData.text, out var currentSceneId);
-        GameplayStatus.ChoicesCount = 0;
-        GameplayStatus.ScenesCount = Scenes.Count;
-        GameplayStatus.ViewedScenes.Clear();
+        GameplayStatisticss.Clear(Scenes.Count);
         CurrentSceneId = currentSceneId;
 
         //лень было разбираться, где в опциях включить это для всех tier :_:
@@ -62,14 +59,12 @@ public class Gameplay : MonoBehaviour
 
     void Update()
     {
-        //чтобы нельзя было кликнуть на пустом месте и выбрать "никакой" вариант в диалоге
-        if (FirstButton != null && EventSystem.current.currentSelectedGameObject == null)
-            EventSystem.current.SetSelectedGameObject(FirstButton.gameObject);
+        UIHelpers.ReturnSelectToControl(FirstButton);
     }
 
     void SelectButton(int buttonNumber)
     {
-        GameplayStatus.ChoicesCount++;
+        GameplayStatisticss.ChoicesCount++;
         FirstButton = null;
         EventSystem.current.SetSelectedGameObject(null);
 
@@ -96,7 +91,7 @@ public class Gameplay : MonoBehaviour
 
         if (currentScene.Choices.Length == 0)
         {
-            SceneManager.LoadScene("GameOver", LoadSceneMode.Single);
+            ScreensNavigator.GoToGameOver();
             return;
         }
 
@@ -169,19 +164,7 @@ public class Gameplay : MonoBehaviour
         }
 
         //показываем варианты ответа с анимаицией
-        StartCoroutine(FadeIn(ChoicesPanelParent.GetComponent<CanvasGroup>(), 0.4f));
-    }
-
-    private IEnumerator FadeIn(CanvasGroup canvasGroup, float duration)
-    {
-        float counter = 0;
-        while (counter < duration)
-        {
-            counter += Time.deltaTime;
-            canvasGroup.alpha = Mathf.Lerp(0, 1, counter / duration);
-
-            yield return null;
-        }
+        StartCoroutine(UIHelpers.FadeIn(ChoicesPanelParent.GetComponent<CanvasGroup>(), 0.4f));
     }
 
     private IEnumerator PlaySubtitles()
