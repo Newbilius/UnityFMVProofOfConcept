@@ -29,17 +29,13 @@ public class ScenesLoader
                     musicNameOnStart = textDataLine.Replace("$", "");
             }
 
-            var sceneId = "";
-            var result = nameIdRegex.Matches(sceneData.name);
-            if (result.Count > 0 && result[0].Groups.Count > 0)
-                sceneId = result[0].Groups[1].Value;
-
             var scene = new Scene(textData[0],
-                sceneId,
+                GetSceneCode(sceneData.name),
                 sceneData.links.Select(x => new SceneChoice
                 {
                     Caption = x.name,
-                    SceneId = x.pid
+                    SceneId = x.pid,
+                    SceneCode = GetSceneCode(x.link)
                 }).ToArray(),
                 musicNameOnStart,
                 musicNameOnEnd);
@@ -48,5 +44,13 @@ public class ScenesLoader
         }
 
         return dictionary;
+    }
+
+    private string GetSceneCode(string name)
+    {
+        var result = nameIdRegex.Matches(name);
+        if (result.Count > 0 && result[0].Groups.Count > 0)
+            return result[0].Groups[1].Value;
+        return "";
     }
 }

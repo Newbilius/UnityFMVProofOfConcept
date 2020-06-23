@@ -22,11 +22,11 @@ public class GameScriptsProvider
 
     public Scene SceneCompleteHandle(Scene scene)
     {
-        if (!SceneCompleteActions.TryGetValue(scene.SceneId, out var sceneHandler))
+        if (!SceneCompleteActions.TryGetValue(scene.SceneCode, out var sceneHandler))
             return scene;
 
         var newScene = new Scene(scene.FileName,
-            scene.SceneId,
+            scene.SceneCode,
             scene.Choices,
             scene.MusicNameOnStart,
             scene.MusicNameOnEnd);
@@ -45,10 +45,6 @@ public class GameScriptsProvider
             {
                 "ChainsawAtack",
                 choice => { choice.Caption = GetKnuckleAttackHaveChainsawText(); }
-            },
-            {
-                "BAD_ENGING",
-                choice => { choice.Caption = "Секретная концовка"; }
             }
         };
 
@@ -67,10 +63,8 @@ public class GameScriptsProvider
                 "RESTART",
                 scene =>
                 {
-                    if (KnuckleAttackCounter < 3)
-                    {
-                        scene.Choices = scene.Choices.Where(x => x.Caption != "BAD_ENGING").ToArray();
-                    }
+                    if (KnuckleAttackCounter < 4)
+                        scene.Choices = scene.Choices.Where(x => x.SceneCode != "BAD_ENDING").ToArray();
                 }
             }
         };

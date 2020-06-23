@@ -19,4 +19,5 @@ public class TwineJsonNodeLink
 {
     public int pid;
     public string name;
+    public string link;
 }
