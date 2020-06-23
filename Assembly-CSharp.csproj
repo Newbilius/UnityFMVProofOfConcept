@@ -62,6 +62,7 @@
      <Compile Include="Assets\Scene.cs" />
      <Compile Include="Assets\SceneChoice.cs" />
      <Compile Include="Assets\ScenesLoader.cs" />
+     <Compile Include="Assets\SubtitlesProvider.cs" />
      <Compile Include="Assets\TwineJson.cs" />
      <Compile Include="Assets\UI\ColorTextButton.cs" />
  <Reference Include="UnityEngine">

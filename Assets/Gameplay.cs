@@ -18,7 +18,9 @@ public class Gameplay : MonoBehaviour
     public Button ButtonPrototype;
     public AudioSource MusicAudioSource;
     public TextAsset ScenesJsonData;
+    public Text SubtitlesText;
     private readonly GameScriptsProvider gameScriptsProvider = new GameScriptsProvider();
+    private readonly SubtitlesProvider subtitlesProvider = new SubtitlesProvider();
     private Button FirstButton;
 
     public Dictionary<int, Scene> Scenes;
@@ -49,8 +51,10 @@ public class Gameplay : MonoBehaviour
         //лень было разбираться, где в опциях включить это для всех tier :_:
         QualitySettings.vSyncCount = 1;
 
+        SubtitlesText.gameObject.SetActive(false);
         ChoicesPanelParent.SetActive(false);
         VideoPlayer.loopPointReached += VideoCompleted;
+        VideoPlayer.started += source => StartCoroutine(PlaySubtitles());
         VideoPlayer.playbackSpeed = Application.isEditor ? 3 : 1; //полезно для дебага
 
         await FirstVideo(Scenes[CurrentSceneId]);
@@ -180,6 +184,33 @@ public class Gameplay : MonoBehaviour
         }
     }
 
+    private IEnumerator PlaySubtitles()
+    {
+        SubtitleBlock oldSubs = null;
+
+        while (VideoPlayer.isPlaying)
+        {
+            var subs = subtitlesProvider.GetForTime((float) VideoPlayer.time);
+            if (subs != oldSubs)
+            {
+                oldSubs = subs;
+                if (subs != null)
+                {
+                    SubtitlesText.text = subs.Text;
+                    SubtitlesText.gameObject.SetActive(true);
+                }
+                else
+                {
+                    SubtitlesText.gameObject.SetActive(false);
+                }
+            }
+
+            yield return new WaitForSeconds(0.1f);
+        }
+
+        SubtitlesText.gameObject.SetActive(false);
+    }
+
     private void ChangeMusic(string name)
     {
         //возможно стоит сделать кроссфейд между композициями
@@ -189,6 +220,7 @@ public class Gameplay : MonoBehaviour
 
     private void Play(string name)
     {
+        TryLoadSubtitles(name);
         Cursor.visible = false;
         VideoPlayer.Pause();
         VideoPlayer.url = GetFileName(name);
@@ -201,7 +233,9 @@ public class Gameplay : MonoBehaviour
         Cursor.visible = false;
 
         //все извращения в этом коде - чтобы не было мигания фона в момент подгрузки первого видео
+        //и мне они совсем не нравятся
         VideoPlayer.SetDirectAudioMute(0, true);
+        TryLoadSubtitles(scene.FileName);
         VideoPlayer.url = GetFileName(scene.FileName);
         VideoPlayer.Prepare();
         if (!VideoPlayer.isPrepared)
@@ -217,6 +251,18 @@ public class Gameplay : MonoBehaviour
         MusicAudioSource.Play();
         VideoPlayer.Play();
         LoadingScreen.SetActive(false);
+    }
+
+    private void TryLoadSubtitles(string name)
+    {
+        var fileName = Path.Combine(Application.streamingAssetsPath, name + ".srt");
+        if (File.Exists(fileName))
+        {
+            var text = File.ReadAllText(fileName);
+            subtitlesProvider.Load(text);
+        }
+        else
+            subtitlesProvider.Clear();
     }
 
     private string GetFileName(string name)
