@@ -11,4 +11,9 @@ public static class ScreensNavigator
     {
         SceneManager.LoadScene("Gameplay", LoadSceneMode.Single);
     }
+
+    public static void GotoMenu()
+    {
+        SceneManager.LoadScene("Menu", LoadSceneMode.Single);
+    }
 }

@@ -59,6 +59,7 @@
      <Compile Include="Assets\GameScriptsProvider.cs" />
      <Compile Include="Assets\Gameplay.cs" />
      <Compile Include="Assets\GameplayStatisticss.cs" />
+     <Compile Include="Assets\MenuScreen.cs" />
      <Compile Include="Assets\Scene.cs" />
      <Compile Include="Assets\SceneChoice.cs" />
      <Compile Include="Assets\ScenesLoader.cs" />

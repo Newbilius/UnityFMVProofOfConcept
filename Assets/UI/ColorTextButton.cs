@@ -5,6 +5,10 @@ public class ColorTextButton : Button
 {
     private Text text;
 
+    [SerializeField] public int NormalFontSize = 60;
+
+    [SerializeField] public int SelectedFontSize = 80;
+
     protected override void DoStateTransition(SelectionState state, bool instant)
     {
         if (text == null)
@@ -16,7 +20,7 @@ public class ColorTextButton : Button
         switch (state)
         {
             case SelectionState.Normal:
-                text.fontSize = 60;
+                text.fontSize = NormalFontSize;
                 break;
 
             case SelectionState.Highlighted:
@@ -24,7 +28,7 @@ public class ColorTextButton : Button
                 break;
 
             case SelectionState.Selected:
-                text.fontSize = 78;
+                text.fontSize = SelectedFontSize;
                 break;
         }
     }
