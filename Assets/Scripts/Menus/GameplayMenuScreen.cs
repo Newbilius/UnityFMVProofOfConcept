@@ -1,9 +1,8 @@
-﻿using UnityEngine;
-using UnityEngine.EventSystems;
+﻿using UnityEngine.EventSystems;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
-public class GameplayMenuScreen : MonoBehaviour
+public class GameplayMenuScreen : BaseGameScreen
 {
     public Button ContinueButton;
     public Button OptionsButton;
@@ -25,8 +24,11 @@ public class GameplayMenuScreen : MonoBehaviour
             return;
 
         UIHelpers.ReturnSelectToControl(ContinueButton);
+    }
 
-        if (UIHelpers.EscapeOrStartButtonPressed())
+    public override void OnEscape()
+    {
+        if (SceneManager.sceneCount == 2)
             ScreensNavigator.CloseGameplayMenu();
     }
 }

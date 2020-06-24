@@ -1,14 +1,18 @@
-﻿using UnityEngine;
-using UnityEngine.EventSystems;
+﻿using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
-public class OptionsScreen : MonoBehaviour
+public class OptionsScreen : BaseGameScreen
 {
     public Button SaveButton;
     public Button CancelButton;
     public ColorTextButton ChangeSubtitlesToggleButton;
     public Text SubtitlesStateText;
     private bool SubtitlesOn;
+
+    public override void OnEscape()
+    {
+        ScreensNavigator.CloseOptionsScreen();
+    }
 
     // Start is called before the first frame update
     void Start()
@@ -46,8 +50,5 @@ public class OptionsScreen : MonoBehaviour
     void Update()
     {
         UIHelpers.ReturnSelectToControl(ChangeSubtitlesToggleButton);
-
-        if (UIHelpers.EscapeOrStartButtonPressed())
-            ScreensNavigator.CloseOptionsScreen();
     }
 }

@@ -1,0 +1,55 @@
+{
+    "name": "InputActions",
+    "maps": [
+        {
+            "name": "Main",
+            "id": "f06730e7-3cae-4833-8a36-2160038c2895",
+            "actions": [
+                {
+                    "name": "Escape",
+                    "type": "Button",
+                    "id": "2f67a74e-f81e-4f03-8605-e6bff05e1e97",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "Press"
+                }
+            ],
+            "bindings": [
+                {
+                    "name": "",
+                    "id": "7e41f2ee-2aa8-48d0-ad0e-97ef487e16e4",
+                    "path": "<Gamepad>/start",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Escape",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "85872717-6e7c-4be8-b88b-6ba02c8c9f02",
+                    "path": "<Keyboard>/escape",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Escape",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "2cd32943-f289-4f83-b8bc-64027b0be02b",
+                    "path": "<XInputController>/buttonEast",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Escape",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                }
+            ]
+        }
+    ],
+    "controlSchemes": []
+}
