@@ -20,4 +20,6 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Screens/GameplayMenu.unity
     guid: e6927f6b0ec33c6418db7ba7a2d2be8f
-  m_configObjects: {}
+  m_configObjects:
+    com.unity.input.settings: {fileID: 11400000, guid: fc2508eb0173d8748a133a27f3e79aa8,
+      type: 2}

@@ -9,7 +9,7 @@ using UnityEngine.SceneManagement;
 using UnityEngine.Video;
 using UnityEngine.UI;
 
-public class Gameplay : MonoBehaviour
+public class Gameplay : BaseGameScreen
 {
     public VideoPlayer VideoPlayer;
     public GameObject LoadingScreen;
@@ -72,15 +72,18 @@ public class Gameplay : MonoBehaviour
         }
 
         UIHelpers.ReturnSelectToControl(FirstButton);
+    }
 
-        if (GameLoaded && UIHelpers.EscapeOrStartButtonPressed())
+    public override void OnEscape()
+    {
+        if (GameLoaded && SceneManager.sceneCount == 1)
         {
             if (VideoPlayer.isPlaying)
             {
                 VideoPlayer.Pause();
                 VideoPaused = true;
             }
-            
+
             ScreensNavigator.OpenGameplayMenu();
         }
     }
