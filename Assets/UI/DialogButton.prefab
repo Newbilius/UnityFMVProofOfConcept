@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 1173435643983379090}
   - component: {fileID: 8632554001477680230}
   m_Layer: 5
-  m_Name: DiagloButton
+  m_Name: DialogButton
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -119,6 +119,8 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls: []
+  NormalFontSize: 60
+  SelectedFontSize: 80
 --- !u!1 &1173435644491735468
 GameObject:
   m_ObjectHideFlags: 0
@@ -184,16 +186,16 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls: []
   m_FontData:
-    m_Font: {fileID: 12800000, guid: 06a375d352312eb4e8802547d93490b6, type: 3}
-    m_FontSize: 60
+    m_Font: {fileID: 12800000, guid: e6149dec7c6c7a24686253b1f73ac1c2, type: 2}
+    m_FontSize: 69
     m_FontStyle: 0
     m_BestFit: 0
     m_MinSize: 2
-    m_MaxSize: 90
+    m_MaxSize: 151
     m_Alignment: 3
     m_AlignByGeometry: 1
     m_RichText: 0
-    m_HorizontalOverflow: 0
-    m_VerticalOverflow: 0
+    m_HorizontalOverflow: 1
+    m_VerticalOverflow: 1
     m_LineSpacing: 1
   m_Text: Text
