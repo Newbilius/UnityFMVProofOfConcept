@@ -5,18 +5,18 @@ using System.Collections.Generic;
 
 public class SubtitlesProvider
 {
-    private List<SubtitleBlock> _subtitles = new List<SubtitleBlock>(0);
+    private List<SubtitleBlock> subtitles = new List<SubtitleBlock>(0);
 
     public void Load(string text)
     {
-        _subtitles = LoadData(text);
+        subtitles = LoadData(text);
     }
 
     private List<SubtitleBlock> LoadData(string text)
     {
         var lines = text.Split(new[] {"\r\n", "\r", "\n"}, StringSplitOptions.None);
 
-        var currentState = eReadState.Index;
+        var currentState = SubtitleDataReadState.Index;
 
         var subs = new List<SubtitleBlock>();
 
@@ -29,17 +29,16 @@ public class SubtitlesProvider
 
             switch (currentState)
             {
-                case eReadState.Index:
+                case SubtitleDataReadState.Index:
                 {
-                    int index;
-                    if (Int32.TryParse(line, out index))
+                    if (int.TryParse(line, out var index))
                     {
                         currentIndex = index;
-                        currentState = eReadState.Time;
+                        currentState = SubtitleDataReadState.Time;
                     }
                 }
                     break;
-                case eReadState.Time:
+                case SubtitleDataReadState.Time:
                 {
                     line = line.Replace(',', '.');
                     var parts = line.Split(new[] {"-->"}, StringSplitOptions.RemoveEmptyEntries);
@@ -47,21 +46,19 @@ public class SubtitlesProvider
                     // Parse the timestamps
                     if (parts.Length == 2)
                     {
-                        TimeSpan fromTime;
-                        if (TimeSpan.TryParse(parts[0], out fromTime))
+                        if (TimeSpan.TryParse(parts[0], out var fromTime))
                         {
-                            TimeSpan toTime;
-                            if (TimeSpan.TryParse(parts[1], out toTime))
+                            if (TimeSpan.TryParse(parts[1], out var toTime))
                             {
                                 currentFrom = fromTime.TotalSeconds;
                                 currentTo = toTime.TotalSeconds;
-                                currentState = eReadState.Text;
+                                currentState = SubtitleDataReadState.Text;
                             }
                         }
                     }
                 }
                     break;
-                case eReadState.Text:
+                case SubtitleDataReadState.Text:
                 {
                     if (currentText != string.Empty)
                         currentText += "\r\n";
@@ -76,7 +73,7 @@ public class SubtitlesProvider
 
                         // Reset stuff so we can start again for the next block
                         currentText = string.Empty;
-                        currentState = eReadState.Index;
+                        currentState = SubtitleDataReadState.Index;
                     }
                 }
                     break;
@@ -86,32 +83,29 @@ public class SubtitlesProvider
         return subs;
     }
 
-    public SubtitleBlock GetForTime(float time)
+    public SubtitleBlock GetForTime(double time)
     {
-        if (_subtitles.Count > 0)
+        if (subtitles.Count > 0)
         {
-            var subtitle = _subtitles[0];
+            var subtitle = subtitles[0];
 
             if (time >= subtitle.To)
             {
-                _subtitles.RemoveAt(0);
+                subtitles.RemoveAt(0);
 
-                if (_subtitles.Count == 0)
+                if (subtitles.Count == 0)
                     return null;
 
-                subtitle = _subtitles[0];
+                subtitle = subtitles[0];
             }
 
-            if (subtitle.From > time)
-                return null;
-
-            return subtitle;
+            return subtitle.From > time ? null : subtitle;
         }
 
         return null;
     }
 
-    enum eReadState
+    enum SubtitleDataReadState
     {
         Index,
         Time,
@@ -120,16 +114,12 @@ public class SubtitlesProvider
 
     public void Clear()
     {
-        _subtitles.Clear();
+        subtitles.Clear();
     }
 }
 
 public class SubtitleBlock
 {
-    static SubtitleBlock _blank;
-
-    public static SubtitleBlock Blank => _blank ?? (_blank = new SubtitleBlock(0, 0, 0, string.Empty));
-
     public int Index { get; }
     public double Length { get; }
     public double From { get; }

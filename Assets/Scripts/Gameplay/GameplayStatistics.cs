@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 
-public static class GameplayStatisticss
+public static class GameplayStatistics
 {
     public static int AllScenesCount;
     public static List<int> ViewedScenes = new List<int>();

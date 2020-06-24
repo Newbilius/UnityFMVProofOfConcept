@@ -19,12 +19,14 @@ public class Gameplay : MonoBehaviour
     public AudioSource MusicAudioSource;
     public TextAsset ScenesJsonData;
     public Text SubtitlesText;
+    private Button FirstButton;
+
     private readonly GameScriptsProvider gameScriptsProvider = new GameScriptsProvider();
     private readonly SubtitlesProvider subtitlesProvider = new SubtitlesProvider();
-    private Button FirstButton;
-    private bool GameLoaded = false;
 
-    private bool VideoPaused = false;
+    private bool GameLoaded;
+    private bool VideoPaused;
+
     public Dictionary<int, Scene> Scenes;
 
     private int _сurrentSceneId;
@@ -35,8 +37,8 @@ public class Gameplay : MonoBehaviour
         set
         {
             _сurrentSceneId = value;
-            if (!GameplayStatisticss.ViewedScenes.Contains(value))
-                GameplayStatisticss.ViewedScenes.Add(value);
+            if (!GameplayStatistics.ViewedScenes.Contains(value))
+                GameplayStatistics.ViewedScenes.Add(value);
         }
     }
 
@@ -44,8 +46,8 @@ public class Gameplay : MonoBehaviour
 
     async Task Start()
     {
-        Scenes = new ScenesLoader().Init(ScenesJsonData.text, out var currentSceneId);
-        GameplayStatisticss.Clear(Scenes.Count);
+        Scenes = new ScenesLoader().LoadData(ScenesJsonData.text, out var currentSceneId);
+        GameplayStatistics.Clear(Scenes.Count);
         CurrentSceneId = currentSceneId;
 
         SubtitlesText.gameObject.SetActive(false);
@@ -54,7 +56,7 @@ public class Gameplay : MonoBehaviour
         VideoPlayer.started += source => StartCoroutine(PlaySubtitles());
         VideoPlayer.playbackSpeed = Application.isEditor ? 3 : 1; //полезно для дебага
 
-        await FirstVideo(Scenes[CurrentSceneId]);
+        await PlayFirstVideo(Scenes[CurrentSceneId]);
     }
 
     void Update()
@@ -79,13 +81,13 @@ public class Gameplay : MonoBehaviour
                 VideoPaused = true;
             }
             
-            ScreensNavigator.OpenGameplayMenuScreen();
+            ScreensNavigator.OpenGameplayMenu();
         }
     }
 
     void SelectButton(int buttonNumber)
     {
-        GameplayStatisticss.ChoicesCount++;
+        GameplayStatistics.ChoicesCount++;
         FirstButton = null;
         EventSystem.current.SetSelectedGameObject(null);
 
@@ -94,9 +96,9 @@ public class Gameplay : MonoBehaviour
         CurrentSceneId = choice.SceneId;
 
         if (CurrentScene.MusicNameOnStart != null)
-            ChangeMusic(CurrentScene.MusicNameOnStart);
+            PlayMusic(CurrentScene.MusicNameOnStart);
 
-        Play(CurrentScene.FileName);
+        PlayVideo(CurrentScene.FileName);
     }
 
     void VideoCompleted(VideoPlayer vp)
@@ -105,7 +107,7 @@ public class Gameplay : MonoBehaviour
         var currentScene = gameScriptsProvider.SceneCompleteHandle(CurrentScene);
 
         if (currentScene.MusicNameOnEnd != null)
-            ChangeMusic(currentScene.MusicNameOnEnd);
+            PlayMusic(currentScene.MusicNameOnEnd);
 
         foreach (Transform child in ChoicesPanel.transform)
             Destroy(child.gameObject);
@@ -194,7 +196,7 @@ public class Gameplay : MonoBehaviour
 
         while (VideoPlayer.isPlaying && Config.SubtitlesOn)
         {
-            var subs = subtitlesProvider.GetForTime((float) VideoPlayer.time);
+            var subs = subtitlesProvider.GetForTime(VideoPlayer.time);
             if (subs != oldSubs)
             {
                 oldSubs = subs;
@@ -213,35 +215,34 @@ public class Gameplay : MonoBehaviour
         SubtitlesText.gameObject.SetActive(false);
     }
 
-    //возможно стоит сделать кроссфейд между композициями
-    private void ChangeMusic(string name)
+    private void PlayMusic(string audioFileName)
     {
-        if (name == "NULL")
+        if (audioFileName == "NULL")
             MusicAudioSource.Stop();
-
-        MusicAudioSource.clip = Resources.Load<AudioClip>("Music/" + name);
-        MusicAudioSource.Play();
+        else
+        {
+            MusicAudioSource.clip = Resources.Load<AudioClip>("Music/" + audioFileName);
+            MusicAudioSource.Play();
+        }
     }
 
-    private void Play(string name)
+    private void PlayVideo(string videoFileName)
     {
-        TryLoadSubtitles(name);
+        TryLoadSubtitles(videoFileName);
         Cursor.visible = false;
-        VideoPlayer.Pause();
-        VideoPlayer.url = GetFileName(name);
-        VideoPlayer.Prepare();
+        VideoPlayer.url = GetVideoFileName(videoFileName);
         VideoPlayer.Play();
     }
 
-    private async Task FirstVideo(Scene scene)
+    private async Task PlayFirstVideo(Scene scene)
     {
         Cursor.visible = false;
 
-        //все извращения в этом коде - чтобы не было мигания фона в момент подгрузки первого видео
-        //и мне они совсем не нравятся
+        //Все извращения в этом коде - чтобы не было мигания фона в момент подгрузки первого видео. И мне они совсем не нравятся.
+
         VideoPlayer.SetDirectAudioMute(0, true);
         TryLoadSubtitles(scene.FileName);
-        VideoPlayer.url = GetFileName(scene.FileName);
+        VideoPlayer.url = GetVideoFileName(scene.FileName);
         VideoPlayer.Prepare();
         if (!VideoPlayer.isPrepared)
             await Task.Delay(100);
@@ -249,7 +250,7 @@ public class Gameplay : MonoBehaviour
         VideoPlayer.Pause();
         VideoPlayer.frame = 1;
 
-        MusicAudioSource.clip = Resources.Load<AudioClip>("Music/" + scene.MusicNameOnStart);
+        PlayMusic(scene.MusicNameOnStart);
 
         await Task.Delay(500);
         VideoPlayer.SetDirectAudioMute(0, false);
@@ -259,9 +260,9 @@ public class Gameplay : MonoBehaviour
         GameLoaded = true;
     }
 
-    private void TryLoadSubtitles(string name)
+    private void TryLoadSubtitles(string subtitlesFileName)
     {
-        var fileName = Path.Combine(Application.streamingAssetsPath, name + ".srt");
+        var fileName = Path.Combine(Application.streamingAssetsPath, subtitlesFileName + ".srt");
         if (File.Exists(fileName))
         {
             var text = File.ReadAllText(fileName);
@@ -271,8 +272,8 @@ public class Gameplay : MonoBehaviour
             subtitlesProvider.Clear();
     }
 
-    private string GetFileName(string name)
+    private static string GetVideoFileName(string videoFileName)
     {
-        return Path.Combine(Application.streamingAssetsPath, name + ".mp4");
+        return Path.Combine(Application.streamingAssetsPath, videoFileName + ".mp4");
     }
 }

@@ -2,7 +2,6 @@
 using UnityEngine;
 using UnityEngine.UI;
 
-//todo добавить анимацию изменения размера вверх-вниз?
 //todo нужно сделать так, что изменения в редакторе тут же перерисовывались
 public class ColorTextButton : Button
 {

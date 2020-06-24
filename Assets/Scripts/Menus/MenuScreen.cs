@@ -10,7 +10,7 @@ public class MenuScreen : MonoBehaviour
 
     void Start()
     {
-        BeginGameButton.onClick.AddListener(ScreensNavigator.StartGameplay);
+        BeginGameButton.onClick.AddListener(ScreensNavigator.GoToGameplay);
 
         OptionsButton.onClick.AddListener(ScreensNavigator.OpenOptionsScreen);
 

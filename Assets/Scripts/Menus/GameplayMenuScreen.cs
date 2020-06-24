@@ -13,9 +13,9 @@ public class GameplayMenuScreen : MonoBehaviour
     {
         EventSystem.current.SetSelectedGameObject(null);
 
-        ContinueButton.onClick.AddListener(ScreensNavigator.CloseGameplayMenuScreen);
+        ContinueButton.onClick.AddListener(ScreensNavigator.CloseGameplayMenu);
         OptionsButton.onClick.AddListener(ScreensNavigator.OpenOptionsScreen);
-        ExitButton.onClick.AddListener(ScreensNavigator.GotoMenu);
+        ExitButton.onClick.AddListener(ScreensNavigator.GotoMainMenu);
     }
 
     void Update()
@@ -23,9 +23,10 @@ public class GameplayMenuScreen : MonoBehaviour
         //открыто вложенное меню? Тогда не перехватывем фокус кнопки. Некрасиво, сам понимаю, но сходу универсальнее не придумал
         if (SceneManager.sceneCount > 2)
             return;
+
         UIHelpers.ReturnSelectToControl(ContinueButton);
 
         if (UIHelpers.EscapeOrStartButtonPressed())
-            ScreensNavigator.CloseGameplayMenuScreen();
+            ScreensNavigator.CloseGameplayMenu();
     }
 }

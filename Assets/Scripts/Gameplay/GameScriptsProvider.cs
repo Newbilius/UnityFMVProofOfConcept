@@ -4,7 +4,7 @@ using System.Linq;
 
 public class GameScriptsProvider
 {
-    private static int KnuckleAttackCounter = 0;
+    private static int KnuckleAttackCounter;
 
     public SceneChoice ChoicesHandle(SceneChoice choice)
     {
