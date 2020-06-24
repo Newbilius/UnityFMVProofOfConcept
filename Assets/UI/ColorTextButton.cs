@@ -2,15 +2,15 @@
 using UnityEngine;
 using UnityEngine.UI;
 
-//todo цвет тоже давать возможность менять из настроек
 //todo добавить анимацию изменения размера вверх-вниз?
+//todo нужно сделать так, что изменения в редакторе тут же перерисовывались
 public class ColorTextButton : Button
 {
     private Text text;
 
     [SerializeField] public int NormalFontSize = 60;
-
     [SerializeField] public int SelectedFontSize = 80;
+    [SerializeField] public Color TextColor = Color.yellow;
 
     public event Action<int> FontSizeChanged;
 
@@ -19,7 +19,7 @@ public class ColorTextButton : Button
         if (text == null)
         {
             text = GetComponentInChildren<Text>();
-            text.color = Color.yellow;
+            text.color = TextColor;
         }
 
         switch (state)

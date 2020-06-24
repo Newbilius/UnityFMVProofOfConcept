@@ -38,8 +38,8 @@ public class OptionsScreen : MonoBehaviour
     private void ChangeSubtitlesStateText()
     {
         SubtitlesStateText.text = SubtitlesOn
-            ? " Есть"
-            : " Нет";
+            ? " Включены"
+            : " Выключены";
     }
 
     // Update is called once per frame

@@ -568,6 +568,16 @@ PrefabInstance:
       propertyPath: SelectedFontSize
       value: 120
       objectReference: {fileID: 0}
+    - target: {fileID: 8632554001477680230, guid: f942a6eda37a67c4793b811f4c2ea6b7,
+        type: 3}
+      propertyPath: TextColor.g
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8632554001477680230, guid: f942a6eda37a67c4793b811f4c2ea6b7,
+        type: 3}
+      propertyPath: TextColor.b
+      value: 1
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: f942a6eda37a67c4793b811f4c2ea6b7, type: 3}
 --- !u!1001 &994504032
