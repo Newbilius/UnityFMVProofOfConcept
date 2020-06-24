@@ -183,15 +183,18 @@ public class Gameplay : MonoBehaviour
                     SubtitlesText.gameObject.SetActive(false);
             }
 
-            yield return new WaitForSeconds(0.1f);
+            yield return new WaitForSeconds(0.05f);
         }
 
         SubtitlesText.gameObject.SetActive(false);
     }
 
+    //возможно стоит сделать кроссфейд между композициями
     private void ChangeMusic(string name)
     {
-        //возможно стоит сделать кроссфейд между композициями
+        if (name == "NULL") 
+            MusicAudioSource.Stop();
+
         MusicAudioSource.clip = Resources.Load<AudioClip>("Music/" + name);
         MusicAudioSource.Play();
     }

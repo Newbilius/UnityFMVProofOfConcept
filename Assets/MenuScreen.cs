@@ -26,7 +26,7 @@ public class MenuScreen : MonoBehaviour
 
     void Update()
     {
-        //открыто вложенное меню? Тогда не возвращаем кнопку назад. Некрасиво, сам понимаю, но сходу универсальнее не придумал
+        //открыто вложенное меню? Тогда не перехватывем фокус кнопки. Некрасиво, сам понимаю, но сходу универсальнее не придумал
         if (SceneManager.sceneCount > 1)
             return;
         UIHelpers.ReturnSelectToControl(BeginGameButton);
