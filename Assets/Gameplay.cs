@@ -24,6 +24,7 @@ public class Gameplay : MonoBehaviour
     private Button FirstButton;
     private bool GameLoaded = false;
 
+    private bool VideoPaused = false;
     public Dictionary<int, Scene> Scenes;
 
     private int _сurrentSceneId;
@@ -61,9 +62,25 @@ public class Gameplay : MonoBehaviour
         //открыто вложенное меню? Тогда не перехватывем фокус кнопки. Некрасиво, сам понимаю, но сходу универсальнее не придумал
         if (SceneManager.sceneCount > 1)
             return;
+
+        if (VideoPaused)
+        {
+            VideoPaused = false;
+            VideoPlayer.Play();
+        }
+
         UIHelpers.ReturnSelectToControl(FirstButton);
-        if (GameLoaded && UIHelpers.EscapeOrStartButtonPressed()) 
+
+        if (GameLoaded && UIHelpers.EscapeOrStartButtonPressed())
+        {
+            if (VideoPlayer.isPlaying)
+            {
+                VideoPlayer.Pause();
+                VideoPaused = true;
+            }
+            
             ScreensNavigator.OpenGameplayMenuScreen();
+        }
     }
 
     void SelectButton(int buttonNumber)
