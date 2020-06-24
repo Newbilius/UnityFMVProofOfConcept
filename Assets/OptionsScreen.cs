@@ -46,5 +46,8 @@ public class OptionsScreen : MonoBehaviour
     void Update()
     {
         UIHelpers.ReturnSelectToControl(ChangeSubtitlesToggleButton);
+
+        if (UIHelpers.EscapeOrStartButtonPressed())
+            ScreensNavigator.CloseOptionsScreen();
     }
 }

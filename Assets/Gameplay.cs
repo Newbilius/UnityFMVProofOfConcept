@@ -5,6 +5,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using UnityEngine;
 using UnityEngine.EventSystems;
+using UnityEngine.SceneManagement;
 using UnityEngine.Video;
 using UnityEngine.UI;
 
@@ -21,6 +22,7 @@ public class Gameplay : MonoBehaviour
     private readonly GameScriptsProvider gameScriptsProvider = new GameScriptsProvider();
     private readonly SubtitlesProvider subtitlesProvider = new SubtitlesProvider();
     private Button FirstButton;
+    private bool GameLoaded = false;
 
     public Dictionary<int, Scene> Scenes;
 
@@ -56,7 +58,12 @@ public class Gameplay : MonoBehaviour
 
     void Update()
     {
+        //открыто вложенное меню? Тогда не перехватывем фокус кнопки. Некрасиво, сам понимаю, но сходу универсальнее не придумал
+        if (SceneManager.sceneCount > 1)
+            return;
         UIHelpers.ReturnSelectToControl(FirstButton);
+        if (GameLoaded && UIHelpers.EscapeOrStartButtonPressed()) 
+            ScreensNavigator.OpenGameplayMenuScreen();
     }
 
     void SelectButton(int buttonNumber)
@@ -192,7 +199,7 @@ public class Gameplay : MonoBehaviour
     //возможно стоит сделать кроссфейд между композициями
     private void ChangeMusic(string name)
     {
-        if (name == "NULL") 
+        if (name == "NULL")
             MusicAudioSource.Stop();
 
         MusicAudioSource.clip = Resources.Load<AudioClip>("Music/" + name);
@@ -232,6 +239,7 @@ public class Gameplay : MonoBehaviour
         MusicAudioSource.Play();
         VideoPlayer.Play();
         LoadingScreen.SetActive(false);
+        GameLoaded = true;
     }
 
     private void TryLoadSubtitles(string name)

@@ -12,6 +12,11 @@ public static class UIHelpers
             EventSystem.current.SetSelectedGameObject(uiControl.gameObject);
     }
 
+    public static bool EscapeOrStartButtonPressed()
+    {
+        return Input.GetKeyUp(KeyCode.Escape) || Input.GetKeyUp(KeyCode.Joystick1Button7);
+    }
+
     public static IEnumerator FadeIn(CanvasGroup canvasGroup, float duration)
     {
         float counter = 0;

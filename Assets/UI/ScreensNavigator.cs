@@ -27,4 +27,14 @@ public static class ScreensNavigator
     {
         SceneManager.UnloadSceneAsync("Options");
     }
+
+    public static void OpenGameplayMenuScreen()
+    {
+        SceneManager.LoadScene("GameplayMenu", LoadSceneMode.Additive);
+    }
+
+    public static void CloseGameplayMenuScreen()
+    {
+        SceneManager.UnloadSceneAsync("GameplayMenu");
+    }
 }
