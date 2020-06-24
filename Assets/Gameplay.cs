@@ -45,9 +45,6 @@ public class Gameplay : MonoBehaviour
         GameplayStatisticss.Clear(Scenes.Count);
         CurrentSceneId = currentSceneId;
 
-        //лень было разбираться, где в опциях включить это для всех tier :_:
-        QualitySettings.vSyncCount = 1;
-
         SubtitlesText.gameObject.SetActive(false);
         ChoicesPanelParent.SetActive(false);
         VideoPlayer.loopPointReached += VideoCompleted;
