@@ -35,6 +35,7 @@ public class GameScriptsProvider
         return newScene;
     }
 
+    //вызывается перез показом вариантов ответа, string - название конкретного варианта
     private readonly Dictionary<string, Action<SceneChoice>> ChoicesHandlers
         = new Dictionary<string, Action<SceneChoice>>
         {
@@ -44,6 +45,7 @@ public class GameScriptsProvider
             }
         };
 
+    //вызывается после просмотра видео, string -ID текущей сцены
     private readonly Dictionary<string, Action<Scene>> SceneCompleteActions
         = new Dictionary<string, Action<Scene>>
         {
