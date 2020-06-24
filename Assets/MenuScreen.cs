@@ -1,4 +1,5 @@
 ﻿using UnityEngine;
+using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
 public class MenuScreen : MonoBehaviour
@@ -7,12 +8,11 @@ public class MenuScreen : MonoBehaviour
     public Button OptionsButton;
     public Button ExitButton;
 
-    // Start is called before the first frame update
     void Start()
     {
         BeginGameButton.onClick.AddListener(ScreensNavigator.StartGameplay);
 
-        OptionsButton.onClick.AddListener(() => { Debug.Log("111"); });
+        OptionsButton.onClick.AddListener(ScreensNavigator.OpenOptionsScreen);
 
         ExitButton.onClick.AddListener(() =>
         {
@@ -24,9 +24,11 @@ public class MenuScreen : MonoBehaviour
         });
     }
 
-    // Update is called once per frame
     void Update()
     {
+        //открыто вложенное меню? Тогда не возвращаем кнопку назад. Некрасиво, сам понимаю, но сходу универсальнее не придумал
+        if (SceneManager.sceneCount > 1)
+            return;
         UIHelpers.ReturnSelectToControl(BeginGameButton);
     }
 }

@@ -168,7 +168,7 @@ public class Gameplay : MonoBehaviour
     {
         SubtitleBlock oldSubs = null;
 
-        while (VideoPlayer.isPlaying)
+        while (VideoPlayer.isPlaying && Config.SubtitlesOn)
         {
             var subs = subtitlesProvider.GetForTime((float) VideoPlayer.time);
             if (subs != oldSubs)
@@ -180,9 +180,7 @@ public class Gameplay : MonoBehaviour
                     SubtitlesText.gameObject.SetActive(true);
                 }
                 else
-                {
                     SubtitlesText.gameObject.SetActive(false);
-                }
             }
 
             yield return new WaitForSeconds(0.1f);

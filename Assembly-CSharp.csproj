@@ -55,11 +55,14 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+     <Compile Include="Assets\Config.cs" />
      <Compile Include="Assets\GameOverScreen.cs" />
      <Compile Include="Assets\GameScriptsProvider.cs" />
      <Compile Include="Assets\Gameplay.cs" />
      <Compile Include="Assets\GameplayStatisticss.cs" />
      <Compile Include="Assets\MenuScreen.cs" />
+     <Compile Include="Assets\OptionsScreen.cs" />
+     <Compile Include="Assets\PlayerPrefsHelper.cs" />
      <Compile Include="Assets\Scene.cs" />
      <Compile Include="Assets\SceneChoice.cs" />
      <Compile Include="Assets\ScenesLoader.cs" />

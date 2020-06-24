@@ -1,5 +1,6 @@
 ﻿using UnityEngine.SceneManagement;
 
+//todo имена привести к идентичному стилю
 public static class ScreensNavigator
 {
     public static void GoToGameOver()
@@ -15,5 +16,15 @@ public static class ScreensNavigator
     public static void GotoMenu()
     {
         SceneManager.LoadScene("Menu", LoadSceneMode.Single);
+    }
+
+    public static void OpenOptionsScreen()
+    {
+        SceneManager.LoadScene("Options", LoadSceneMode.Additive);
+    }
+
+    public static void CloseOptionsScreen()
+    {
+        SceneManager.UnloadSceneAsync("Options");
     }
 }
