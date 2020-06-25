@@ -9,7 +9,7 @@ using UnityEngine.SceneManagement;
 using UnityEngine.Video;
 using UnityEngine.UI;
 
-//todo пора прибраться - тут уже смешано и сразу несколько логик (проигрывание и пропуск видео, работа с субтитрами и т.п.)
+//todo очень хочется прибраться - тут намешано сразу несколько логик (проигрывание и пропуск видео, работа с субтитрами, вариантами и т.п.)
 public class Gameplay : BaseGameScreen
 {
     public VideoPlayer VideoPlayer;
@@ -29,6 +29,7 @@ public class Gameplay : BaseGameScreen
     private Button FirstButton;
     private bool GameLoaded;
     private bool VideoPaused;
+
     private int _currentSceneId;
 
     private int CurrentSceneId
@@ -102,6 +103,7 @@ public class Gameplay : BaseGameScreen
 
     public override void OnEscape()
     {
+        //вот это вот "scenecount" мне дичайше не нравится, но
         if (GameLoaded && SceneManager.sceneCount == 1)
         {
             if (VideoPlayer.isPlaying)
@@ -217,7 +219,7 @@ public class Gameplay : BaseGameScreen
             }
         }
 
-        //показываем варианты ответа с анимаицией
+        //показываем варианты ответа с анимацией
         StartCoroutine(UIHelpers.FadeIn(ChoicesPanelParent.GetComponent<CanvasGroup>(), 0.4f));
     }
 
@@ -269,7 +271,7 @@ public class Gameplay : BaseGameScreen
     {
         Cursor.visible = false;
 
-        //Все извращения в этом коде - чтобы не было мигания фона в момент подгрузки первого видео. И мне они совсем не нравятся.
+        //Все извращения в этом коде - чтобы не было мигания фона в момент подгрузки первого видео, и мне это совсем не нравится
 
         VideoPlayer.SetDirectAudioMute(0, true);
         TryLoadSubtitles(scene.FileName);

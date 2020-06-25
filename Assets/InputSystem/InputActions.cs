@@ -73,7 +73,7 @@ public class @InputActions : IInputActionCollection, IDisposable
                     ""name"": """",
                     ""id"": ""5c0c4861-b802-404f-b46c-1231d9506f56"",
                     ""path"": ""*/{Submit}"",
-                    ""interactions"": ""Hold(duration=1.2)"",
+                    ""interactions"": ""Hold(duration=1.5)"",
                     ""processors"": """",
                     ""groups"": """",
                     ""action"": ""Skip"",
