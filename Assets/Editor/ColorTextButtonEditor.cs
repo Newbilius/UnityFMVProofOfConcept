@@ -13,7 +13,6 @@ public class ColorTextButtonEditor : UnityEditor.UI.ButtonEditor
         EditorGUI.BeginChangeCheck();
         colorTextButton.NormalFontSize = EditorGUILayout.IntField("Нормальный шрифт", colorTextButton.NormalFontSize);
         colorTextButton.SelectedFontSize = EditorGUILayout.IntField("Большой шрифт", colorTextButton.SelectedFontSize);
-        colorTextButton.TextColor = EditorGUILayout.ColorField("Цвет текста", colorTextButton.TextColor);
 
         if (EditorGUI.EndChangeCheck()) 
             EditorUtility.SetDirty(colorTextButton);

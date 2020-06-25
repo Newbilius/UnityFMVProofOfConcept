@@ -9,18 +9,17 @@ public class ColorTextButton : Button
 
     [SerializeField] public int NormalFontSize = 60;
     [SerializeField] public int SelectedFontSize = 80;
-    [SerializeField] public Color TextColor = Color.yellow;
 
     public event Action<int> FontSizeChanged;
 
+    protected override void Awake()
+    {
+        base.Start();
+        Text = GetComponentInChildren<Text>();
+    }
+
     protected override void DoStateTransition(SelectionState state, bool instant)
     {
-        if (Text == null)
-        {
-            Text = GetComponentInChildren<Text>();
-            Text.color = TextColor;
-        }
-
         switch (state)
         {
             case SelectionState.Normal:
