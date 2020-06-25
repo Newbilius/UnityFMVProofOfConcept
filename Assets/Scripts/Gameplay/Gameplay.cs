@@ -21,16 +21,14 @@ public class Gameplay : BaseGameScreen
     public TextAsset ScenesJsonData;
     public Text SubtitlesText;
     public CanvasGroup SkipText;
-    private Button FirstButton;
-
-    private readonly GameScriptsProvider gameScriptsProvider = new GameScriptsProvider();
-    private readonly SubtitlesProvider subtitlesProvider = new SubtitlesProvider();
-
-    private bool GameLoaded;
-    private bool VideoPaused;
-
     public Dictionary<int, Scene> Scenes;
 
+    private readonly GameScriptsProvider GameScriptsProvider = new GameScriptsProvider();
+    private readonly SubtitlesProvider SubtitlesProvider = new SubtitlesProvider();
+
+    private Button FirstButton;
+    private bool GameLoaded;
+    private bool VideoPaused;
     private int _currentSceneId;
 
     private int CurrentSceneId
@@ -124,7 +122,7 @@ public class Gameplay : BaseGameScreen
         EventSystem.current.SetSelectedGameObject(null);
 
         ChoicesPanelParent.SetActive(false);
-        var choice = gameScriptsProvider.ChoicesHandle(CurrentScene.Choices[buttonNumber]);
+        var choice = GameScriptsProvider.ChoicesHandle(CurrentScene.Choices[buttonNumber]);
         CurrentSceneId = choice.SceneId;
 
         if (CurrentScene.MusicNameOnStart != null)
@@ -137,7 +135,7 @@ public class Gameplay : BaseGameScreen
     {
         InputActions.Main.Skip.Disable();
         Cursor.visible = true;
-        var currentScene = gameScriptsProvider.SceneCompleteHandle(CurrentScene);
+        var currentScene = GameScriptsProvider.SceneCompleteHandle(CurrentScene);
 
         if (currentScene.MusicNameOnEnd != null)
             PlayMusic(currentScene.MusicNameOnEnd);
@@ -157,7 +155,7 @@ public class Gameplay : BaseGameScreen
         var buttons = new List<Button>();
         foreach (var choiceValue in currentScene.Choices)
         {
-            var choice = gameScriptsProvider.ChoicesHandle(choiceValue);
+            var choice = GameScriptsProvider.ChoicesHandle(choiceValue);
             var button = Instantiate(ButtonPrototype);
             button.GetComponentInChildren<Text>().text = choice.Caption;
             buttons.Add(button);
@@ -229,7 +227,7 @@ public class Gameplay : BaseGameScreen
 
         while (VideoPlayer.isPlaying && Config.SubtitlesOn)
         {
-            var subs = subtitlesProvider.GetForTime(VideoPlayer.time);
+            var subs = SubtitlesProvider.GetForTime(VideoPlayer.time);
             if (subs != oldSubs)
             {
                 oldSubs = subs;
@@ -299,10 +297,10 @@ public class Gameplay : BaseGameScreen
         if (File.Exists(fileName))
         {
             var text = File.ReadAllText(fileName);
-            subtitlesProvider.Load(text);
+            SubtitlesProvider.Load(text);
         }
         else
-            subtitlesProvider.Clear();
+            SubtitlesProvider.Clear();
     }
 
     private static string GetVideoFileName(string videoFileName)

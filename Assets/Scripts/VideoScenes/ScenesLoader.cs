@@ -5,7 +5,7 @@ using UnityEngine;
 
 public class ScenesLoader
 {
-    readonly Regex _nameIdRegex = new Regex("\\((.*?)\\)", RegexOptions.Compiled);
+    readonly Regex NameIdRegex = new Regex("\\((.*?)\\)", RegexOptions.Compiled);
 
     public Dictionary<int, Scene> LoadData(string jsonData, out int startSceneId)
     {
@@ -48,7 +48,7 @@ public class ScenesLoader
 
     private string GetSceneCode(string name)
     {
-        var result = _nameIdRegex.Matches(name);
+        var result = NameIdRegex.Matches(name);
         if (result.Count > 0 && result[0].Groups.Count > 0)
             return result[0].Groups[1].Value;
         return "";

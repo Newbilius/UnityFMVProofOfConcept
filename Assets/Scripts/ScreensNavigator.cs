@@ -2,8 +2,8 @@
 
 public static class ScreensNavigator
 {
-    private static string OptionsKey = "Options";
-    private static string GameplayMenuKey = "GameplayMenu";
+    private const string OptionsKey = "Options";
+    private const string GameplayMenuKey = "GameplayMenu";
 
     public static void GoToGameOver()
     {
