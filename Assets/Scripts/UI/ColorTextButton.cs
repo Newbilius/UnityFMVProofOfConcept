@@ -1,5 +1,4 @@
-﻿using System;
-using UnityEngine;
+﻿using UnityEngine;
 using UnityEngine.UI;
 
 //todo нужно сделать так, что изменения в редакторе тут же перерисовывались
@@ -9,8 +8,6 @@ public class ColorTextButton : Button
 
     [SerializeField] public int NormalFontSize = 60;
     [SerializeField] public int SelectedFontSize = 80;
-
-    public event Action<int> FontSizeChanged;
 
     protected override void Awake()
     {
@@ -24,7 +21,6 @@ public class ColorTextButton : Button
         {
             case SelectionState.Normal:
                 Text.fontSize = NormalFontSize;
-                FontSizeChanged?.Invoke(NormalFontSize);
                 break;
 
             case SelectionState.Highlighted:
@@ -33,7 +29,6 @@ public class ColorTextButton : Button
 
             case SelectionState.Selected:
                 Text.fontSize = SelectedFontSize;
-                FontSizeChanged?.Invoke(SelectedFontSize);
                 break;
         }
     }
