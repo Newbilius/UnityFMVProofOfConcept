@@ -5,7 +5,7 @@ using UnityEngine.UI;
 //todo нужно сделать так, что изменения в редакторе тут же перерисовывались
 public class ColorTextButton : Button
 {
-    private Text text;
+    public Text Text { get; private set; }
 
     [SerializeField] public int NormalFontSize = 60;
     [SerializeField] public int SelectedFontSize = 80;
@@ -15,16 +15,16 @@ public class ColorTextButton : Button
 
     protected override void DoStateTransition(SelectionState state, bool instant)
     {
-        if (text == null)
+        if (Text == null)
         {
-            text = GetComponentInChildren<Text>();
-            text.color = TextColor;
+            Text = GetComponentInChildren<Text>();
+            Text.color = TextColor;
         }
 
         switch (state)
         {
             case SelectionState.Normal:
-                text.fontSize = NormalFontSize;
+                Text.fontSize = NormalFontSize;
                 FontSizeChanged?.Invoke(NormalFontSize);
                 break;
 
@@ -33,7 +33,7 @@ public class ColorTextButton : Button
                 break;
 
             case SelectionState.Selected:
-                text.fontSize = SelectedFontSize;
+                Text.fontSize = SelectedFontSize;
                 FontSizeChanged?.Invoke(SelectedFontSize);
                 break;
         }

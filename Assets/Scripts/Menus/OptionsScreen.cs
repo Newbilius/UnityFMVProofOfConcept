@@ -6,7 +6,6 @@ public class OptionsScreen : BaseGameScreen
     public Button SaveButton;
     public Button CancelButton;
     public ColorTextButton ChangeSubtitlesToggleButton;
-    public Text SubtitlesStateText;
     private bool SubtitlesOn;
 
     public override void OnEscape()
@@ -34,16 +33,12 @@ public class OptionsScreen : BaseGameScreen
             ChangeSubtitlesStateText();
         });
 
-        ChangeSubtitlesToggleButton.FontSizeChanged += size => { SubtitlesStateText.fontSize = size; };
-
         ChangeSubtitlesStateText();
     }
 
     private void ChangeSubtitlesStateText()
     {
-        SubtitlesStateText.text = SubtitlesOn
-            ? " Включены"
-            : " Выключены";
+        ChangeSubtitlesToggleButton.Text.text = $"Субтитры: {(SubtitlesOn ? "Включены" : "Выключены")}";
     }
 
     // Update is called once per frame
