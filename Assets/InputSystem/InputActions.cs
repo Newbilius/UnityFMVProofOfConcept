@@ -1,4 +1,4 @@
-// GENERATED AUTOMATICALLY FROM 'Assets/InputActions.inputactions'
+// GENERATED AUTOMATICALLY FROM 'Assets/InputSystem/InputActions.inputactions'
 
 using System;
 using System.Collections;
@@ -22,6 +22,14 @@ public class @InputActions : IInputActionCollection, IDisposable
                     ""name"": ""Escape"",
                     ""type"": ""Button"",
                     ""id"": ""2f67a74e-f81e-4f03-8605-e6bff05e1e97"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": ""Press""
+                },
+                {
+                    ""name"": ""Skip"",
+                    ""type"": ""Button"",
+                    ""id"": ""ac67743c-5710-4e6b-9487-7b5fe426d48d"",
                     ""expectedControlType"": ""Button"",
                     ""processors"": """",
                     ""interactions"": ""Press""
@@ -60,6 +68,17 @@ public class @InputActions : IInputActionCollection, IDisposable
                     ""action"": ""Escape"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""5c0c4861-b802-404f-b46c-1231d9506f56"",
+                    ""path"": ""*/{Submit}"",
+                    ""interactions"": ""Hold(duration=1.2)"",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Skip"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
                 }
             ]
         }
@@ -69,6 +88,7 @@ public class @InputActions : IInputActionCollection, IDisposable
         // Main
         m_Main = asset.FindActionMap("Main", throwIfNotFound: true);
         m_Main_Escape = m_Main.FindAction("Escape", throwIfNotFound: true);
+        m_Main_Skip = m_Main.FindAction("Skip", throwIfNotFound: true);
     }
 
     public void Dispose()
@@ -119,11 +139,13 @@ public class @InputActions : IInputActionCollection, IDisposable
     private readonly InputActionMap m_Main;
     private IMainActions m_MainActionsCallbackInterface;
     private readonly InputAction m_Main_Escape;
+    private readonly InputAction m_Main_Skip;
     public struct MainActions
     {
         private @InputActions m_Wrapper;
         public MainActions(@InputActions wrapper) { m_Wrapper = wrapper; }
         public InputAction @Escape => m_Wrapper.m_Main_Escape;
+        public InputAction @Skip => m_Wrapper.m_Main_Skip;
         public InputActionMap Get() { return m_Wrapper.m_Main; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -136,6 +158,9 @@ public class @InputActions : IInputActionCollection, IDisposable
                 @Escape.started -= m_Wrapper.m_MainActionsCallbackInterface.OnEscape;
                 @Escape.performed -= m_Wrapper.m_MainActionsCallbackInterface.OnEscape;
                 @Escape.canceled -= m_Wrapper.m_MainActionsCallbackInterface.OnEscape;
+                @Skip.started -= m_Wrapper.m_MainActionsCallbackInterface.OnSkip;
+                @Skip.performed -= m_Wrapper.m_MainActionsCallbackInterface.OnSkip;
+                @Skip.canceled -= m_Wrapper.m_MainActionsCallbackInterface.OnSkip;
             }
             m_Wrapper.m_MainActionsCallbackInterface = instance;
             if (instance != null)
@@ -143,6 +168,9 @@ public class @InputActions : IInputActionCollection, IDisposable
                 @Escape.started += instance.OnEscape;
                 @Escape.performed += instance.OnEscape;
                 @Escape.canceled += instance.OnEscape;
+                @Skip.started += instance.OnSkip;
+                @Skip.performed += instance.OnSkip;
+                @Skip.canceled += instance.OnSkip;
             }
         }
     }
@@ -150,5 +178,6 @@ public class @InputActions : IInputActionCollection, IDisposable
     public interface IMainActions
     {
         void OnEscape(InputAction.CallbackContext context);
+        void OnSkip(InputAction.CallbackContext context);
     }
 }

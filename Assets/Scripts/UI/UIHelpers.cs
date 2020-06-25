@@ -23,4 +23,16 @@ public static class UIHelpers
             yield return null;
         }
     }
+
+    public static IEnumerator FadeOut(CanvasGroup canvasGroup, float duration)
+    {
+        float counter = 0;
+        while (counter < duration)
+        {
+            counter += Time.deltaTime;
+            canvasGroup.alpha = Mathf.Lerp(1, 0, counter / duration);
+
+            yield return null;
+        }
+    }
 }

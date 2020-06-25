@@ -9,6 +9,7 @@ using UnityEngine.SceneManagement;
 using UnityEngine.Video;
 using UnityEngine.UI;
 
+//todo пора прибраться - тут уже смешано и сразу несколько логик (проигрывание и пропуск видео, работа с субтитрами и т.п.)
 public class Gameplay : BaseGameScreen
 {
     public VideoPlayer VideoPlayer;
@@ -19,6 +20,7 @@ public class Gameplay : BaseGameScreen
     public AudioSource MusicAudioSource;
     public TextAsset ScenesJsonData;
     public Text SubtitlesText;
+    public CanvasGroup SkipText;
     private Button FirstButton;
 
     private readonly GameScriptsProvider gameScriptsProvider = new GameScriptsProvider();
@@ -29,14 +31,14 @@ public class Gameplay : BaseGameScreen
 
     public Dictionary<int, Scene> Scenes;
 
-    private int _сurrentSceneId;
+    private int _currentSceneId;
 
     private int CurrentSceneId
     {
-        get => _сurrentSceneId;
+        get => _currentSceneId;
         set
         {
-            _сurrentSceneId = value;
+            _currentSceneId = value;
             if (!GameplayStatistics.ViewedScenes.Contains(value))
                 GameplayStatistics.ViewedScenes.Add(value);
         }
@@ -50,13 +52,38 @@ public class Gameplay : BaseGameScreen
         GameplayStatistics.Clear(Scenes.Count);
         CurrentSceneId = currentSceneId;
 
+        SkipText.alpha = 0;
+
         SubtitlesText.gameObject.SetActive(false);
         ChoicesPanelParent.SetActive(false);
         VideoPlayer.loopPointReached += VideoCompleted;
-        VideoPlayer.started += source => StartCoroutine(PlaySubtitles());
+        VideoPlayer.started += source =>
+        {
+            InputActions.Main.Skip.Enable();
+            StartCoroutine(PlaySubtitles());
+        };
+
         VideoPlayer.playbackSpeed = Application.isEditor ? 3 : 1; //полезно для дебага
 
         await PlayFirstVideo(Scenes[CurrentSceneId]);
+
+        InputActions.Main.Skip.started += context
+            => StartCoroutine(UIHelpers.FadeIn(SkipText, 0.3f));
+
+        InputActions.Main.Skip.canceled += context =>
+        {
+            if (SkipText.alpha > 0)
+                StartCoroutine(UIHelpers.FadeOut(SkipText, 0.3f));
+        };
+
+        InputActions.Main.Skip.performed += context =>
+        {
+            if (VideoPlayer.isPlaying)
+            {
+                VideoPlayer.frame = (long) VideoPlayer.frameCount;
+                SkipText.alpha = 0;
+            }
+        };
     }
 
     void Update()
@@ -67,6 +94,7 @@ public class Gameplay : BaseGameScreen
 
         if (VideoPaused)
         {
+            InputActions.Main.Skip.Enable();
             VideoPaused = false;
             VideoPlayer.Play();
         }
@@ -80,6 +108,7 @@ public class Gameplay : BaseGameScreen
         {
             if (VideoPlayer.isPlaying)
             {
+                InputActions.Main.Skip.Disable();
                 VideoPlayer.Pause();
                 VideoPaused = true;
             }
@@ -106,6 +135,7 @@ public class Gameplay : BaseGameScreen
 
     void VideoCompleted(VideoPlayer vp)
     {
+        InputActions.Main.Skip.Disable();
         Cursor.visible = true;
         var currentScene = gameScriptsProvider.SceneCompleteHandle(CurrentScene);
 
