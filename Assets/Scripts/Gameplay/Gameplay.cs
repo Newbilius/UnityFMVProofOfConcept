@@ -90,6 +90,7 @@ public class Gameplay : BaseGameScreen
     void Update()
     {
         //открыто вложенное меню? Тогда не перехватывем фокус кнопки. Некрасиво, сам понимаю, но сходу универсальнее не придумал
+        //todo использовать счётчик сцен в ScreensNavigator...? (мысль пока до конца не продумана)
         if (SceneManager.sceneCount > 1)
             return;
 
@@ -265,7 +266,7 @@ public class Gameplay : BaseGameScreen
     {
         TryLoadSubtitles(videoFileName);
         Cursor.visible = false;
-        VideoPlayer.url = GetVideoFileName(videoFileName);
+        VideoPlayer.clip = GetVideoFile(videoFileName);
         VideoPlayer.Play();
     }
 
@@ -277,7 +278,7 @@ public class Gameplay : BaseGameScreen
 
         VideoPlayer.SetDirectAudioMute(0, true);
         TryLoadSubtitles(scene.FileName);
-        VideoPlayer.url = GetVideoFileName(scene.FileName);
+        VideoPlayer.clip = GetVideoFile(scene.FileName);
         VideoPlayer.Prepare();
         if (!VideoPlayer.isPrepared)
             await Task.Delay(100);
@@ -297,18 +298,15 @@ public class Gameplay : BaseGameScreen
 
     private void TryLoadSubtitles(string subtitlesFileName)
     {
-        var fileName = Path.Combine(Application.streamingAssetsPath, subtitlesFileName + ".srt");
-        if (File.Exists(fileName))
-        {
-            var text = File.ReadAllText(fileName);
-            SubtitlesProvider.Load(text);
-        }
+        var subtitleText = Resources.Load<TextAsset>($"Video/{subtitlesFileName}");
+        if (subtitleText != null)
+            SubtitlesProvider.Load(subtitleText.text);
         else
             SubtitlesProvider.Clear();
     }
 
-    private static string GetVideoFileName(string videoFileName)
+    private static VideoClip GetVideoFile(string videoFileName)
     {
-        return Path.Combine(Application.streamingAssetsPath, videoFileName + ".mp4");
+        return Resources.Load<VideoClip>("Video/" + videoFileName);
     }
 }
