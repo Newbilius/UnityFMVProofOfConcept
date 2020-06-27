@@ -43,6 +43,8 @@ public class Gameplay : BaseGameScreen
         }
     }
 
+    protected override bool CanShowMouseCursor => !VideoPlayer.isPlaying;
+
     private Scene CurrentScene => Scenes[CurrentSceneId];
 
     async Task Start()
@@ -136,7 +138,7 @@ public class Gameplay : BaseGameScreen
     void VideoCompleted(VideoPlayer vp)
     {
         InputActions.Main.Skip.Disable();
-        Cursor.visible = true;
+        Cursor.visible = IsMouseMode;
         var currentScene = GameScriptsProvider.SceneCompleteHandle(CurrentScene);
 
         if (currentScene.MusicNameOnEnd != null)

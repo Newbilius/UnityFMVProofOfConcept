@@ -34,10 +34,14 @@ public class ColorTextButton : Button
 
     void OnGUI()
     {
-        var mouseValue = Mouse.current.delta.ReadValue();
-        var mouseDelta = Mathf.Abs(mouseValue.x) + Mathf.Abs(mouseValue.y);
-        if (mouseDelta > 2 && IsPointerInside)
-            Select();
+        var mouse = Mouse.current;
+        if (mouse != null)
+        {
+            var mouseValue = mouse.delta.ReadValue();
+            var mouseDelta = Mathf.Abs(mouseValue.x) + Mathf.Abs(mouseValue.y);
+            if (mouseDelta > 2 && IsPointerInside)
+                Select();
+        }
     }
 
     protected override void DoStateTransition(SelectionState state, bool instant)

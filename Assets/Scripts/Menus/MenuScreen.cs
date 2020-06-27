@@ -1,8 +1,10 @@
-﻿using UnityEngine;
+﻿// ReSharper disable RedundantUsingDirective
+using UnityEngine;
+// ReSharper restore RedundantUsingDirective
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
-public class MenuScreen : MonoBehaviour
+public class MenuScreen : BaseGameScreen
 {
     public Button BeginGameButton;
     public Button OptionsButton;
