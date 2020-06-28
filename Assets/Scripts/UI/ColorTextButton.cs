@@ -4,7 +4,6 @@ using UnityEngine.EventSystems;
 using UnityEngine.InputSystem;
 using UnityEngine.UI;
 
-//todo нужно сделать так, чтобы при изменения в редакторе размеры шрифта кнопка в превью сцены тоже перерисовывалась
 public class ColorTextButton : Button
 {
     private Text TextComponent { get; set; }

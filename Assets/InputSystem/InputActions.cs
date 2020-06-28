@@ -92,7 +92,7 @@ public class @InputActions : IInputActionCollection, IDisposable
                     ""name"": """",
                     ""id"": ""7e1de18d-7e29-4d5c-ab48-1b12a9cb8f1f"",
                     ""path"": ""<Keyboard>/space"",
-                    ""interactions"": """",
+                    ""interactions"": ""Hold(duration=1.5)"",
                     ""processors"": """",
                     ""groups"": """",
                     ""action"": ""Skip"",
