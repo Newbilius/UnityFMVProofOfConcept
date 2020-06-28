@@ -19,16 +19,13 @@ public class GameplayMenuScreen : BaseGameScreen
 
     void Update()
     {
-        //открыто вложенное меню? Тогда не перехватывем фокус кнопки. Некрасиво, сам понимаю, но сходу универсальнее не придумал
-        if (SceneManager.sceneCount > 2)
-            return;
-
-        UIHelpers.ReturnSelectToControl(ContinueButton);
+        if (IsActiveScreen())
+            UIHelpers.ReturnSelectToControl(ContinueButton);
     }
 
     public override void OnEscape()
     {
-        if (SceneManager.sceneCount == 2)
+        if (IsActiveScreen())
             ScreensNavigator.CloseGameplayMenu();
     }
 }

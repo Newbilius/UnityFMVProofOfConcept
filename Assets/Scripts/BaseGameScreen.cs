@@ -5,12 +5,19 @@ public class BaseGameScreen : MonoBehaviour
 {
     public InputActions InputActions;
     protected bool IsMouseMode = true;
+    private int CurrentScreenNumber;
 
     void Awake()
     {
+        CurrentScreenNumber = ScreensNavigator.ScreenNumberCounter;
         InputActions = new InputActions();
         InputActions.Main.Escape.performed += _ => OnEscape();
         InputActions.Main.AnyAction.performed += _ => AnyKeyPressed();
+    }
+
+    protected bool IsActiveScreen()
+    {
+        return CurrentScreenNumber == ScreensNavigator.ScreenNumberCounter;
     }
 
     public virtual void AnyKeyPressed()

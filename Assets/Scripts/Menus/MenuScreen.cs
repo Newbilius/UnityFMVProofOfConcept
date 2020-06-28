@@ -28,9 +28,7 @@ public class MenuScreen : BaseGameScreen
 
     void Update()
     {
-        //открыто вложенное меню? Тогда не перехватывем фокус кнопки. Некрасиво, сам понимаю, но сходу универсальнее не придумал
-        if (SceneManager.sceneCount > 1)
-            return;
-        UIHelpers.ReturnSelectToControl(BeginGameButton);
+        if (IsActiveScreen())
+            UIHelpers.ReturnSelectToControl(BeginGameButton);
     }
 }

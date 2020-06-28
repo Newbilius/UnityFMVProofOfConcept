@@ -13,7 +13,6 @@ public class OptionsScreen : BaseGameScreen
         ScreensNavigator.CloseOptionsScreen();
     }
 
-    // Start is called before the first frame update
     void Start()
     {
         EventSystem.current.SetSelectedGameObject(null);
@@ -41,9 +40,9 @@ public class OptionsScreen : BaseGameScreen
         ChangeSubtitlesToggleButton.Text.text = $"Субтитры: {(SubtitlesOn ? "Включены" : "Выключены")}";
     }
 
-    // Update is called once per frame
     void Update()
     {
-        UIHelpers.ReturnSelectToControl(ChangeSubtitlesToggleButton);
+        if (IsActiveScreen())
+            UIHelpers.ReturnSelectToControl(ChangeSubtitlesToggleButton);
     }
 }

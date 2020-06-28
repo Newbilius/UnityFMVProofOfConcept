@@ -1,6 +1,5 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
-using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 using UnityEngine;
@@ -89,9 +88,7 @@ public class Gameplay : BaseGameScreen
 
     void Update()
     {
-        //открыто вложенное меню? Тогда не перехватывем фокус кнопки. Некрасиво, сам понимаю, но сходу универсальнее не придумал
-        //todo использовать счётчик сцен в ScreensNavigator...? (мысль пока до конца не продумана)
-        if (SceneManager.sceneCount > 1)
+        if (!IsActiveScreen())
             return;
 
         if (VideoPaused)
@@ -106,8 +103,7 @@ public class Gameplay : BaseGameScreen
 
     public override void OnEscape()
     {
-        //вот это вот "scenecount" мне дичайше не нравится, но
-        if (GameLoaded && SceneManager.sceneCount == 1)
+        if (GameLoaded && IsActiveScreen())
         {
             if (VideoPlayer.isPlaying)
             {
