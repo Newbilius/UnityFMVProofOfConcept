@@ -164,7 +164,9 @@ public class Gameplay : BaseGameScreen
         {
             var choice = GameScriptsProvider.ChoicesHandle(choiceValue);
             var button = Instantiate(ButtonPrototype);
-            button.GetComponentInChildren<Text>().text = choice.Caption;
+            var textComponent = button.GetComponentInChildren<Text>();
+            textComponent.text = choice.Caption;
+            textComponent.GetComponent<RectTransform>().pivot = new Vector2(0, 0.5f);
             buttons.Add(button);
 
             button.transform.SetParent(ChoicesPanel.transform, false);

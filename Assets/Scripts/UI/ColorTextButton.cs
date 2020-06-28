@@ -25,8 +25,8 @@ public class ColorTextButton : Button
     }
 
     private bool IsSelected;
-    private const float AnimationSpeed = 0.007f;
-    private const int StepValue = 1;
+    private const float AnimationSpeed = 0.01f;
+    private const int StepValue = 2;
 
     IEnumerator FontSizeAnimation()
     {
