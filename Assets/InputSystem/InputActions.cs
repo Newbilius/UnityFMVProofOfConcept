@@ -362,17 +362,6 @@ public class @InputActions : IInputActionCollection, IDisposable
                     ""action"": ""AnyAction"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": true
-                },
-                {
-                    ""name"": """",
-                    ""id"": ""7a43d735-74e6-4f6b-9461-1b7f1389110b"",
-                    ""path"": ""*/{Cancel}"",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": """",
-                    ""action"": ""Escape"",
-                    ""isComposite"": false,
-                    ""isPartOfComposite"": false
                 }
             ]
         }
