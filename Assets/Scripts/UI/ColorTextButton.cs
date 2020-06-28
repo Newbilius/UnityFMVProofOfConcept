@@ -3,18 +3,20 @@ using UnityEngine.EventSystems;
 using UnityEngine.InputSystem;
 using UnityEngine.UI;
 
-//todo нужно сделать так, что изменения в редакторе тут же перерисовывались
 public class ColorTextButton : Button
 {
-    public Text Text { get; private set; }
+    public string Text
+    {
+        get => TextComponent.text;
+        set => TextComponent.text = value;
+    }
 
-    [SerializeField] public int NormalFontSize = 60;
-    [SerializeField] public int SelectedFontSize = 80;
+    private Text TextComponent { get; set; }
 
     protected override void Awake()
     {
-        base.Start();
-        Text = GetComponentInChildren<Text>();
+        base.Awake();
+        TextComponent = GetComponentInChildren<Text>();
     }
 
     private bool IsPointerInside { get; set; }
@@ -41,21 +43,6 @@ public class ColorTextButton : Button
             var mouseDelta = Mathf.Abs(mouseValue.x) + Mathf.Abs(mouseValue.y);
             if (mouseDelta > 2 && IsPointerInside)
                 Select();
-        }
-    }
-
-    protected override void DoStateTransition(SelectionState state, bool instant)
-    {
-        switch (state)
-        {
-            case SelectionState.Pressed:
-            case SelectionState.Selected:
-                Text.fontSize = SelectedFontSize;
-                break;
-
-            default:
-                Text.fontSize = NormalFontSize;
-                break;
         }
     }
 }

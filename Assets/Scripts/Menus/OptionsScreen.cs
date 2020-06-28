@@ -37,7 +37,7 @@ public class OptionsScreen : BaseGameScreen
 
     private void ChangeSubtitlesStateText()
     {
-        ChangeSubtitlesToggleButton.Text.text = $"Субтитры: {(SubtitlesOn ? "Включены" : "Выключены")}";
+        ChangeSubtitlesToggleButton.Text = $"Субтитры: {(SubtitlesOn ? "Включены" : "Выключены")}";
     }
 
     void Update()
