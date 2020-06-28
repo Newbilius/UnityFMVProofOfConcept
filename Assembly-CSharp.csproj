@@ -74,12 +74,12 @@
      <Compile Include="Assets\Scripts\VideoScenes\SceneChoice.cs" />
      <Compile Include="Assets\Scripts\VideoScenes\ScenesLoader.cs" />
      <Compile Include="Assets\Scripts\VideoScenes\TwineJson.cs" />
-     <None Include="Assets\Resources\Video\03_взять_бензопилу.txt" />
-     <None Include="Assets\Resources\Video\00_начальная_сцена_02.txt" />
-     <None Include="Assets\Resources\Video\04_атака_бензопилой.txt" />
-     <None Include="Assets\Resources\Video\02_атака_кулаком.txt" />
-     <None Include="Assets\Resources\Video\00_начальная_сцена_01.txt" />
-     <None Include="Assets\Resources\Video\05_секретная_концовка.txt" />
+     <None Include="Assets\Resources\Video\03_get_chainsaw.txt" />
+     <None Include="Assets\Resources\Video\00_opening_02.txt" />
+     <None Include="Assets\Resources\Video\04_chainsaw_attack.txt" />
+     <None Include="Assets\Resources\Video\02_fist_attack.txt" />
+     <None Include="Assets\Resources\Video\00_opening_01.txt" />
+     <None Include="Assets\Resources\Video\05_secret_enging.txt" />
  <Reference Include="UnityEngine">
  <HintPath>C:/Program Files/Unity/Hub/Editor/2019.4.0f1/Editor/Data/Managed/UnityEngine/UnityEngine.dll</HintPath>
  </Reference>
