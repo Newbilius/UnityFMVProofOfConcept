@@ -1,20 +1,47 @@
-﻿using UnityEngine;
+﻿using System.Collections;
+using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.InputSystem;
 using UnityEngine.UI;
 
-//todo нужно сделать так, что изменения в редакторе тут же перерисовывались
+//todo нужно сделать так, чтобы при изменения в редакторе размеры шрифта кнопка в превью сцены тоже перерисовывалась
 public class ColorTextButton : Button
 {
-    public Text Text { get; private set; }
+    private Text TextComponent { get; set; }
+
+    public string Text
+    {
+        get => TextComponent?.text;
+        set => TextComponent.text = value;
+    }
 
     [SerializeField] public int NormalFontSize = 60;
     [SerializeField] public int SelectedFontSize = 80;
 
     protected override void Awake()
     {
-        base.Start();
-        Text = GetComponentInChildren<Text>();
+        base.Awake();
+        TextComponent = GetComponentInChildren<Text>();
+        StartCoroutine("FontSizeAnimation");
+    }
+
+    private bool IsSelected;
+    private const float AnimationSpeed = 0.01f;
+    private const int StepValue = 2;
+
+    IEnumerator FontSizeAnimation()
+    {
+        //возможно тут нужно указать какой-то призак того, что кнопка рисуется, что она не скрыта?
+        while (true)
+        {
+            if (IsSelected && TextComponent.fontSize < SelectedFontSize)
+                TextComponent.fontSize += StepValue;
+
+            if (!IsSelected && TextComponent.fontSize > NormalFontSize)
+                TextComponent.fontSize -= StepValue;
+
+            yield return new WaitForSeconds(AnimationSpeed);
+        }
     }
 
     private bool IsPointerInside { get; set; }
@@ -50,11 +77,15 @@ public class ColorTextButton : Button
         {
             case SelectionState.Pressed:
             case SelectionState.Selected:
-                Text.fontSize = SelectedFontSize;
+                if (instant)
+                    TextComponent.fontSize = SelectedFontSize;
+                IsSelected = true;
                 break;
 
             default:
-                Text.fontSize = NormalFontSize;
+                if (instant)
+                    TextComponent.fontSize = NormalFontSize;
+                IsSelected = false;
                 break;
         }
     }
