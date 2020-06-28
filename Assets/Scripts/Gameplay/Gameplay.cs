@@ -28,6 +28,7 @@ public class Gameplay : BaseGameScreen
     private Button FirstButton;
     private bool GameLoaded;
     private bool VideoPaused;
+    private bool VideoInProgress;
 
     private int _currentSceneId;
 
@@ -56,7 +57,7 @@ public class Gameplay : BaseGameScreen
 
         SubtitlesText.gameObject.SetActive(false);
         ChoicesPanelParent.SetActive(false);
-        VideoPlayer.loopPointReached += VideoCompleted;
+        VideoPlayer.loopPointReached += _ => VideoCompleted();
         VideoPlayer.started += source =>
         {
             InputActions.Main.Skip.Enable();
@@ -76,19 +77,24 @@ public class Gameplay : BaseGameScreen
                 StartCoroutine(UIHelpers.FadeOut(SkipText, 0.3f));
         };
 
-        InputActions.Main.Skip.performed += context =>
+        InputActions.Main.Skip.performed += async context =>
         {
             if (VideoPlayer.isPlaying)
             {
                 VideoPlayer.frame = (long) VideoPlayer.frameCount;
                 SkipText.alpha = 0;
+
+                //костыль на случай если пропустить видео ОЧЕНЬ неудачно - так, что не отработает VideoCompleted
+                await Task.Delay(200);
+                if (VideoInProgress) 
+                    VideoCompleted();
             }
         };
     }
 
     void Update()
     {
-        if (!IsActiveScreen())
+        if (!IsActiveScreen() || !GameLoaded)
             return;
 
         if (VideoPaused)
@@ -132,8 +138,9 @@ public class Gameplay : BaseGameScreen
         PlayVideo(CurrentScene.FileName);
     }
 
-    void VideoCompleted(VideoPlayer vp)
+    void VideoCompleted()
     {
+        VideoInProgress = false;
         InputActions.Main.Skip.Disable();
         Cursor.visible = IsMouseMode;
         var currentScene = GameScriptsProvider.SceneCompleteHandle(CurrentScene);
@@ -264,6 +271,7 @@ public class Gameplay : BaseGameScreen
         Cursor.visible = false;
         VideoPlayer.clip = GetVideoFile(videoFileName);
         VideoPlayer.Play();
+        VideoInProgress = true;
     }
 
     private async Task PlayFirstVideo(Scene scene)
@@ -290,6 +298,7 @@ public class Gameplay : BaseGameScreen
         VideoPlayer.Play();
         LoadingScreen.SetActive(false);
         GameLoaded = true;
+        VideoInProgress = true;
     }
 
     private void TryLoadSubtitles(string subtitlesFileName)
