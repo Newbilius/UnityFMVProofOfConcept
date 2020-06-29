@@ -91,6 +91,11 @@ public class Gameplay : BaseGameScreen
         };
     }
 
+    public override void OnResume()
+    {
+        Cursor.visible = CanShowMouseCursor;
+    }
+
     void Update()
     {
         if (!IsActiveScreen() || !GameLoaded)
