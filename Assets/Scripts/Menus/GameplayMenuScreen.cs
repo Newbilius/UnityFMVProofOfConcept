@@ -1,5 +1,4 @@
 ﻿using UnityEngine.EventSystems;
-using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
 public class GameplayMenuScreen : BaseGameScreen
@@ -17,8 +16,9 @@ public class GameplayMenuScreen : BaseGameScreen
         ExitButton.onClick.AddListener(ScreensNavigator.GotoMainMenu);
     }
 
-    void Update()
+    protected override void Update()
     {
+        base.Update();
         if (IsActiveScreen())
             UIHelpers.ReturnSelectToControl(ContinueButton);
     }

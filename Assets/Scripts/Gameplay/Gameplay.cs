@@ -91,13 +91,9 @@ public class Gameplay : BaseGameScreen
         };
     }
 
-    public override void OnResume()
+    protected override void Update()
     {
-        Cursor.visible = CanShowMouseCursor;
-    }
-
-    void Update()
-    {
+        base.Update();
         if (!IsActiveScreen() || !GameLoaded)
             return;
 
@@ -106,6 +102,7 @@ public class Gameplay : BaseGameScreen
             InputActions.Main.Skip.Enable();
             VideoPaused = false;
             VideoPlayer.Play();
+            Cursor.visible = CanShowMouseCursor;
         }
 
         UIHelpers.ReturnSelectToControl(FirstButton);

@@ -17,8 +17,9 @@ public class GameOverScreen : BaseGameScreen
         RestartButton.onClick.AddListener(ScreensNavigator.GoToGameplay);
     }
 
-    void Update()
+    protected override void Update()
     {
+        base.Update();
         UIHelpers.ReturnSelectToControl(ReturnToMenuButton);
     }
 }

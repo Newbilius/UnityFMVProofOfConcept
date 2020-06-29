@@ -26,19 +26,8 @@ public class BaseGameScreen : MonoBehaviour
         Cursor.visible = false;
     }
 
-    private bool needToCallOnResume;
-
-    void OnGUI()
+    protected virtual void Update()
     {
-        if (!IsActiveScreen())
-            needToCallOnResume = true;
-
-        if (IsActiveScreen() && needToCallOnResume)
-        {
-            needToCallOnResume = false;
-            OnResume();
-        }
-
         if (!IsMouseMode)
         {
             var mouse = Mouse.current;
@@ -58,7 +47,6 @@ public class BaseGameScreen : MonoBehaviour
     protected virtual bool CanShowMouseCursor => true;
 
     public virtual void OnEscape() { }
-    public virtual void OnResume() { }
 
     void OnEnable()
     {

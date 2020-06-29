@@ -1,7 +1,6 @@
-﻿// ReSharper disable RedundantUsingDirective
+﻿//если выкинуть эту строчки - билд перестаёт собираться
 using UnityEngine;
-// ReSharper restore RedundantUsingDirective
-using UnityEngine.SceneManagement;
+//
 using UnityEngine.UI;
 
 public class MenuScreen : BaseGameScreen
@@ -26,8 +25,9 @@ public class MenuScreen : BaseGameScreen
         });
     }
 
-    void Update()
+    protected override void Update()
     {
+        base.Update();
         if (IsActiveScreen())
             UIHelpers.ReturnSelectToControl(BeginGameButton);
     }
