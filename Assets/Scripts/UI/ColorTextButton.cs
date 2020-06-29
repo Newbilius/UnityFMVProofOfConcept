@@ -58,7 +58,7 @@ public class ColorTextButton : Button
         IsPointerInside = false;
     }
 
-    void OnGUI()
+    void Update()
     {
         var mouse = Mouse.current;
         if (mouse != null)
