@@ -261,7 +261,7 @@ PrefabInstance:
     - target: {fileID: 1173435643983379101, guid: f942a6eda37a67c4793b811f4c2ea6b7,
         type: 3}
       propertyPath: m_Name
-      value: ChangeFullScreenToggleButton
+      value: FullScreenToggleButton
       objectReference: {fileID: 0}
     - target: {fileID: 1173435644491735458, guid: f942a6eda37a67c4793b811f4c2ea6b7,
         type: 3}
@@ -644,7 +644,7 @@ MonoBehaviour:
   CancelButton: {fileID: 1608240972}
   ResolutionButton: {fileID: 711827466}
   FullScreenButton: {fileID: 1082557844}
-  ChangeSubtitlesToggleButton: {fileID: 1039214042}
+  SubtitlesButton: {fileID: 1039214042}
 --- !u!114 &498685963
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -845,7 +845,7 @@ PrefabInstance:
     - target: {fileID: 1173435643983379101, guid: f942a6eda37a67c4793b811f4c2ea6b7,
         type: 3}
       propertyPath: m_Name
-      value: ChangeSubtitlesToggleButton
+      value: SubtitlesToggleButton
       objectReference: {fileID: 0}
     - target: {fileID: 1173435644491735458, guid: f942a6eda37a67c4793b811f4c2ea6b7,
         type: 3}

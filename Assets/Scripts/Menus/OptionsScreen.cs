@@ -6,18 +6,19 @@ using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
-//todo удобства пользователя ради перемудрил и накопипастил - надо бы упростить
+//todo порефакторить бы - много бойлерплейта
 public class OptionsScreen : BaseGameScreen
 {
     public Button SaveButton;
     public Button CancelButton;
     public ColorTextButton ResolutionButton;
     public ColorTextButton FullScreenButton;
-    public ColorTextButton ChangeSubtitlesToggleButton;
+    public ColorTextButton SubtitlesButton;
     private bool SubtitlesOn;
     private bool FullScreenOn;
 
     private Config.SelectedResolution[] Resolutions;
+    private Config.SelectedResolution CurrentResolution => Resolutions[CurrentResolutionIndex];
     private int CurrentResolutionIndex;
 
     public override void OnEscape()
@@ -32,46 +33,50 @@ public class OptionsScreen : BaseGameScreen
         SubtitlesOn = Config.SubtitlesOn;
         FullScreenOn = Config.IsFullscreen;
 
+        InitSaveButton();
+        InitCancelButton();
+        InitFullScreenButton();
+        InitResolutionsButton();
+
+        StartCoroutine("LeftRightButtonsPressed");
+    }
+
+    private void InitSaveButton()
+    {
         SaveButton.onClick.AddListener(() =>
         {
             Config.SubtitlesOn = SubtitlesOn;
             Config.IsFullscreen = FullScreenOn;
-            Config.Resolution = Resolutions[CurrentResolutionIndex];
-            Screen.SetResolution(Resolutions[CurrentResolutionIndex].Width,
-                Resolutions[CurrentResolutionIndex].Height,
+            Config.Resolution = CurrentResolution;
+            Screen.SetResolution(CurrentResolution.Width,
+                CurrentResolution.Height,
                 FullScreenOn);
             ScreensNavigator.CloseOptionsScreen();
         });
+    }
 
-        CancelButton.onClick.AddListener(ScreensNavigator.CloseOptionsScreen);
-        ChangeSubtitlesToggleButton.onClick.AddListener(() =>
-        {
-            SubtitlesOn = !SubtitlesOn;
-            SetSubtitlesStateText();
-        });
-        SetSubtitlesStateText();
-
+    private void InitFullScreenButton()
+    {
         FullScreenButton.onClick.AddListener(() =>
         {
             FullScreenOn = !FullScreenOn;
             SetFullscreenStateText();
         });
         SetFullscreenStateText();
-
-        PrepareResolutionsButton();
-        ResolutionButton.onClick.AddListener(() =>
-        {
-            CurrentResolutionIndex++;
-            if (CurrentResolutionIndex > Resolutions.Length - 1)
-                CurrentResolutionIndex = 0;
-            SetResolutionText();
-        });
-        SetResolutionText();
-
-        StartCoroutine("ChangeResolutionButtonsPressed");
     }
 
-    private void PrepareResolutionsButton()
+    private void InitCancelButton()
+    {
+        CancelButton.onClick.AddListener(ScreensNavigator.CloseOptionsScreen);
+        SubtitlesButton.onClick.AddListener(() =>
+        {
+            SubtitlesOn = !SubtitlesOn;
+            SetSubtitlesStateText();
+        });
+        SetSubtitlesStateText();
+    }
+
+    private void InitResolutionsButton()
     {
         Resolutions = Screen.resolutions
             .Select(resolution => new Config.SelectedResolution
@@ -91,6 +96,15 @@ public class OptionsScreen : BaseGameScreen
         CurrentResolutionIndex = Array.IndexOf(Resolutions, currentResolution);
         if (CurrentResolutionIndex == -1)
             CurrentResolutionIndex = 0;
+
+        ResolutionButton.onClick.AddListener(() =>
+        {
+            CurrentResolutionIndex++;
+            if (CurrentResolutionIndex > Resolutions.Length - 1)
+                CurrentResolutionIndex = 0;
+            SetResolutionText();
+        });
+        SetResolutionText();
     }
 
     private class ResolutionEqualityComparer : IEqualityComparer<Config.SelectedResolution>
@@ -114,14 +128,14 @@ public class OptionsScreen : BaseGameScreen
         }
     }
 
-    private IEnumerator ChangeResolutionButtonsPressed()
+    private IEnumerator LeftRightButtonsPressed()
     {
         while (true)
         {
             var value = InputActions.Main.LeftRightNavigation.ReadValue<Vector2>().normalized.x;
-            if (EventSystem.current.currentSelectedGameObject == ResolutionButton.gameObject)
+            if (Math.Abs(value) > 0)
             {
-                if (Math.Abs(value) > 0)
+                if (EventSystem.current.currentSelectedGameObject == ResolutionButton.gameObject)
                 {
                     if (value > 0)
                     {
@@ -138,38 +152,24 @@ public class OptionsScreen : BaseGameScreen
                     }
 
                     SetResolutionText();
-                    yield return new WaitForSeconds(0.15f);
                 }
-                else
-                    yield return null;
-            }
-            else if (EventSystem.current.currentSelectedGameObject == FullScreenButton.gameObject)
-            {
-                if (Math.Abs(value) > 0)
-                {
+
+                if (EventSystem.current.currentSelectedGameObject == FullScreenButton.gameObject)
                     FullScreenButton.onClick?.Invoke();
-                    yield return new WaitForSeconds(0.20f);
-                }
-                else
-                    yield return null;
+
+                if (EventSystem.current.currentSelectedGameObject == SubtitlesButton.gameObject)
+                    SubtitlesButton.onClick?.Invoke();
+
+                yield return new WaitForSeconds(0.15f);
             }
-            else if (EventSystem.current.currentSelectedGameObject == ChangeSubtitlesToggleButton.gameObject)
-            {
-                if (Math.Abs(value) > 0)
-                {
-                    ChangeSubtitlesToggleButton.onClick?.Invoke();
-                    yield return new WaitForSeconds(0.20f);
-                }
-                else
-                    yield return null;
-            }
-            else yield return null;
+            else
+                yield return null;
         }
     }
 
     private void SetSubtitlesStateText()
     {
-        ChangeSubtitlesToggleButton.Text = $"Субтитры: {(SubtitlesOn ? "Включены" : "Выключены")}";
+        SubtitlesButton.Text = $"Субтитры: {(SubtitlesOn ? "Включены" : "Выключены")}";
     }
 
     private void SetFullscreenStateText()
@@ -179,14 +179,13 @@ public class OptionsScreen : BaseGameScreen
 
     private void SetResolutionText()
     {
-        var resolution = Resolutions[CurrentResolutionIndex];
-        ResolutionButton.Text = $"Разрешение {resolution.Width}x{resolution.Height}";
+        ResolutionButton.Text = $"Разрешение {CurrentResolution.Width}x{CurrentResolution.Height}";
     }
 
     protected override void Update()
     {
         base.Update();
         if (IsActiveScreen())
-            UIHelpers.ReturnSelectToControl(ChangeSubtitlesToggleButton);
+            UIHelpers.ReturnSelectToControl(SubtitlesButton);
     }
 }
