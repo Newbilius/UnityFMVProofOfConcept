@@ -7,7 +7,7 @@ using UnityEngine.EventSystems;
 using UnityEngine.Video;
 using UnityEngine.UI;
 
-//todo очень хочется прибраться - тут намешано сразу несколько логик (проигрывание и пропуск видео, работа с субтитрами, вариантами и т.п.)
+//todo разбить на несколько подсистем (диалог, проигрывание видео-аудио, работа с субтитрами, пропуск видео и т.п.)
 public class Gameplay : BaseGameScreen
 {
     public VideoPlayer VideoPlayer;

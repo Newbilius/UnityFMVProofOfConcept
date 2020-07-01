@@ -11,6 +11,16 @@ public class MenuScreen : BaseGameScreen
 
     void Start()
     {
+        var currentResolution = Config.Resolution;
+        if (currentResolution != null 
+            && currentResolution.Width != 0 
+            && currentResolution.Height != 0)
+        {
+            Screen.SetResolution(currentResolution.Width,
+                currentResolution.Height,
+                Config.IsFullscreen);
+        }
+
         BeginGameButton.onClick.AddListener(ScreensNavigator.GoToGameplay);
 
         OptionsButton.onClick.AddListener(ScreensNavigator.OpenOptionsScreen);

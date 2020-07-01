@@ -41,6 +41,14 @@ public class @InputActions : IInputActionCollection, IDisposable
                     ""expectedControlType"": ""Button"",
                     ""processors"": """",
                     ""interactions"": ""Press""
+                },
+                {
+                    ""name"": ""LeftRightNavigation"",
+                    ""type"": ""Value"",
+                    ""id"": ""8e1b85d7-8fe3-4935-a3b8-e0711760f257"",
+                    ""expectedControlType"": ""Vector2"",
+                    ""processors"": """",
+                    ""interactions"": ""Press""
                 }
             ],
             ""bindings"": [
@@ -362,6 +370,160 @@ public class @InputActions : IInputActionCollection, IDisposable
                     ""action"": ""AnyAction"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": true
+                },
+                {
+                    ""name"": ""Gamepad"",
+                    ""id"": ""7afe8962-5882-4479-a5a8-71c21cf1df0c"",
+                    ""path"": ""2DVector"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""LeftRightNavigation"",
+                    ""isComposite"": true,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": ""left"",
+                    ""id"": ""1dba7f3a-0345-415b-8b54-bfc967a3e526"",
+                    ""path"": ""<Gamepad>/leftStick/left"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": "";Gamepad"",
+                    ""action"": ""LeftRightNavigation"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": true
+                },
+                {
+                    ""name"": ""left"",
+                    ""id"": ""2239490a-ccaa-4825-a0ed-a337885094f6"",
+                    ""path"": ""<Gamepad>/rightStick/left"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": "";Gamepad"",
+                    ""action"": ""LeftRightNavigation"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": true
+                },
+                {
+                    ""name"": ""right"",
+                    ""id"": ""1603a19b-b67a-4e5d-9581-a4114963f2d7"",
+                    ""path"": ""<Gamepad>/leftStick/right"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": "";Gamepad"",
+                    ""action"": ""LeftRightNavigation"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": true
+                },
+                {
+                    ""name"": ""right"",
+                    ""id"": ""9948418d-ad19-4b3a-9b2e-cd9da79f96a6"",
+                    ""path"": ""<Gamepad>/rightStick/right"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": "";Gamepad"",
+                    ""action"": ""LeftRightNavigation"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": true
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""bcc9a52e-9b39-4076-9323-a9f402341218"",
+                    ""path"": ""<Gamepad>/dpad"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": "";Gamepad"",
+                    ""action"": ""LeftRightNavigation"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": ""Joystick"",
+                    ""id"": ""1d34f549-b691-43fb-8811-ac9b193510b7"",
+                    ""path"": ""2DVector"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""LeftRightNavigation"",
+                    ""isComposite"": true,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": ""left"",
+                    ""id"": ""b4125bd6-aa17-454c-bb59-292c7965cd5b"",
+                    ""path"": ""<Joystick>/stick/left"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""Joystick"",
+                    ""action"": ""LeftRightNavigation"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": true
+                },
+                {
+                    ""name"": ""right"",
+                    ""id"": ""3fa1e2df-d45d-4c30-92e6-0463bf35c6b1"",
+                    ""path"": ""<Joystick>/stick/right"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""Joystick"",
+                    ""action"": ""LeftRightNavigation"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": true
+                },
+                {
+                    ""name"": ""Keyboard"",
+                    ""id"": ""9ab19542-0944-416d-84b7-c9cd9b8a0e69"",
+                    ""path"": ""2DVector"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""LeftRightNavigation"",
+                    ""isComposite"": true,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": ""left"",
+                    ""id"": ""f8c1bf63-c819-4f5a-bcb1-294148b8c1b7"",
+                    ""path"": ""<Keyboard>/a"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""Keyboard&Mouse"",
+                    ""action"": ""LeftRightNavigation"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": true
+                },
+                {
+                    ""name"": ""left"",
+                    ""id"": ""a3f5e31a-0bcb-4419-9aad-1462a85a9ce2"",
+                    ""path"": ""<Keyboard>/leftArrow"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""Keyboard&Mouse"",
+                    ""action"": ""LeftRightNavigation"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": true
+                },
+                {
+                    ""name"": ""right"",
+                    ""id"": ""e09baedd-7455-4ba9-9b80-ca4ea6347d7a"",
+                    ""path"": ""<Keyboard>/d"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""Keyboard&Mouse"",
+                    ""action"": ""LeftRightNavigation"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": true
+                },
+                {
+                    ""name"": ""right"",
+                    ""id"": ""29f5f391-7b0e-49ae-ae6c-ab200e499e43"",
+                    ""path"": ""<Keyboard>/rightArrow"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""Keyboard&Mouse"",
+                    ""action"": ""LeftRightNavigation"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": true
                 }
             ]
         }
@@ -373,6 +535,7 @@ public class @InputActions : IInputActionCollection, IDisposable
         m_Main_Escape = m_Main.FindAction("Escape", throwIfNotFound: true);
         m_Main_Skip = m_Main.FindAction("Skip", throwIfNotFound: true);
         m_Main_AnyAction = m_Main.FindAction("AnyAction", throwIfNotFound: true);
+        m_Main_LeftRightNavigation = m_Main.FindAction("LeftRightNavigation", throwIfNotFound: true);
     }
 
     public void Dispose()
@@ -425,6 +588,7 @@ public class @InputActions : IInputActionCollection, IDisposable
     private readonly InputAction m_Main_Escape;
     private readonly InputAction m_Main_Skip;
     private readonly InputAction m_Main_AnyAction;
+    private readonly InputAction m_Main_LeftRightNavigation;
     public struct MainActions
     {
         private @InputActions m_Wrapper;
@@ -432,6 +596,7 @@ public class @InputActions : IInputActionCollection, IDisposable
         public InputAction @Escape => m_Wrapper.m_Main_Escape;
         public InputAction @Skip => m_Wrapper.m_Main_Skip;
         public InputAction @AnyAction => m_Wrapper.m_Main_AnyAction;
+        public InputAction @LeftRightNavigation => m_Wrapper.m_Main_LeftRightNavigation;
         public InputActionMap Get() { return m_Wrapper.m_Main; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -450,6 +615,9 @@ public class @InputActions : IInputActionCollection, IDisposable
                 @AnyAction.started -= m_Wrapper.m_MainActionsCallbackInterface.OnAnyAction;
                 @AnyAction.performed -= m_Wrapper.m_MainActionsCallbackInterface.OnAnyAction;
                 @AnyAction.canceled -= m_Wrapper.m_MainActionsCallbackInterface.OnAnyAction;
+                @LeftRightNavigation.started -= m_Wrapper.m_MainActionsCallbackInterface.OnLeftRightNavigation;
+                @LeftRightNavigation.performed -= m_Wrapper.m_MainActionsCallbackInterface.OnLeftRightNavigation;
+                @LeftRightNavigation.canceled -= m_Wrapper.m_MainActionsCallbackInterface.OnLeftRightNavigation;
             }
             m_Wrapper.m_MainActionsCallbackInterface = instance;
             if (instance != null)
@@ -463,6 +631,9 @@ public class @InputActions : IInputActionCollection, IDisposable
                 @AnyAction.started += instance.OnAnyAction;
                 @AnyAction.performed += instance.OnAnyAction;
                 @AnyAction.canceled += instance.OnAnyAction;
+                @LeftRightNavigation.started += instance.OnLeftRightNavigation;
+                @LeftRightNavigation.performed += instance.OnLeftRightNavigation;
+                @LeftRightNavigation.canceled += instance.OnLeftRightNavigation;
             }
         }
     }
@@ -472,5 +643,6 @@ public class @InputActions : IInputActionCollection, IDisposable
         void OnEscape(InputAction.CallbackContext context);
         void OnSkip(InputAction.CallbackContext context);
         void OnAnyAction(InputAction.CallbackContext context);
+        void OnLeftRightNavigation(InputAction.CallbackContext context);
     }
 }
